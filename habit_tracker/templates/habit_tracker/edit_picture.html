@@ -1,0 +1,27 @@
+{% extends "habit_tracker/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Change Profile Picture
+{% endblock %}
+
+{% block main %}
+    <div class="d-flex justify-content-center">
+        <form id="profile-pic-form" enctype="multipart/form-data" data-user-id="{{ user.id }}" method="POST">
+            {% csrf_token %}
+            <label for="profilePicInput">Choose Profile Picture</label>
+            <input type="file" id="profilePicInput" name="profile_pic" accept="image/*">
+        </form>
+    </div>
+
+    <div id="crop-area" style="display: none;">
+        <img id="preview-img" src="#" alt="Preview" style="max-width: 100%;">
+        <button id="crop-btn" type="button">Crop and Save</button>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="{% static 'habit_tracker/profile_picture.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+{% endblock %}

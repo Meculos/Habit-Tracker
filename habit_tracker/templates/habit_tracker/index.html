@@ -1,0 +1,24 @@
+{% extends "habit_tracker/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Homepage - Habit Tracker
+{% endblock %}
+
+{% block main %}
+    <div data-bs-spy="scroll" style="background-color: black !important;" data-bs-target="homepagenav" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+        <div class="row" id="navitem1" style="background-color: black;">
+            <div class="col" style="background-color: black;" id="column2">
+                <img src="{% static 'habit_tracker/images/homepageimg4.webp' %}" class="img-fluid" alt="homepage image">
+            </div>
+            <div class="col" style="background-color: black;" id="column1">
+                <h1 id="text1">Habit Tracker</h1>
+                <p id="text2">Track Those Pesky Habits And Stop Making Excuses About Them Today</p>
+                <a id="button1" href="{% url 'register' %}" class="btn btn-outline-primary">Get Started</a>
+            </div>
+        </div>
+        <div>
+            
+        </div>
+    </div>
+{% endblock %}

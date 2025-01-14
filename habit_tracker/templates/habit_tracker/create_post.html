@@ -1,0 +1,18 @@
+{% extends "habit_tracker/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Create Post - Habit Tracker
+{% endblock %}
+
+{% block main %}
+    <div>
+        <form action="{% url 'make_post' %}" method="post" id="createPostForm">
+            {% csrf_token %}
+            <textarea class="form-control" rows="5" name="createPost" autocomplete="off"></textarea>
+            <div>
+                <button class="btn btn-outline-primary" type="submit">Post</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "habit_tracker/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block main %}
+    {% if message %}
+    <div class="alert alert-dark mx-auto" role="alert">
+    {{ message }}
+    </div>
+    {% endif %}
+    <form method="post" action="{% url 'login' %}" id="loginForm" class="mx-auto">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input id="username" name="loguser" class="form-control" autofocus autocomplete="off" type="text">
+        </div>
+        <div class="form-group mt-4">
+            <label for="password">Password</label>
+            <input id="password" name="logpass" class="form-control" autocomplete="off" type="password">
+        </div>
+        <div>
+            <button class="btn btn-outline-primary d-flex mx-auto" type="submit" id="button3">Login</button>
+        </div>
+        <div class="mt-4">
+            <p style="color: white; font-style: italic;">Don't have an account? <a
+            href="{% url 'register' %}" style="font-style: italic;">Register here!</a></p>
+          </div>
+    </form>
+{% endblock %}

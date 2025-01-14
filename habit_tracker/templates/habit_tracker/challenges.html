@@ -1,0 +1,30 @@
+{% extends "habit_tracker/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Challenges - Habit Tracker
+{% endblock %}
+
+{% block main %}
+    {% if challenges %}
+        {% for challenge in challenges %}
+            <div class="challenge-item d-flex align-items-center border rounded p-3 mb-3">
+                <div class="flex-grow-1 ms-3">
+                    <h5 class="mb-1">{{ challenge.name }}</h5>
+                    <p class="mb-1 text-muted">{{ challenge.point }} points</p>
+                </div>
+                <div>
+                    {% if challenge.ended %}
+                        <p class="text-danger mb-0">Challenge ended</p>
+                    {% else %}
+                        <a href="{% url 'challenge_page' challenge.id %}" class="btn btn-primary rounded-pill">Take Challenge</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="text-center">
+            <p class="text-muted">No challenges yet. Check back later.</p>
+        </div>
+    {% endif %}
+{% endblock %}

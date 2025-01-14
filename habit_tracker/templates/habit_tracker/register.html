@@ -1,0 +1,115 @@
+{% extends "habit_tracker/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <div>
+        {% if message %}
+          <div class="alert alert-dark mx-auto" role="alert">
+            {{ message }}
+          </div>
+        {% endif %}
+        <form method="post" action="{% url 'register' %}" class="mx-auto" id="registerForm" autocomplete="form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="realname">Name</label>
+                <input class="form-control" name="realname" placeholder="eg John Doe" autofocus autocomplete="realname" id="realname" aria-describedby="realnamehelp" type="text">
+                <div id="realnamehelp" class="form-text" style="color: white";>
+                    Your private info will never be shared with anyone
+                </div>
+            </div>
+            <div class="form-group mt-4">
+                <label for="username">Username</label>
+                <input class="form-control" name="new-username" placeholder="Lily4846" autocomplete="new-username" id="username" aria-describedby="usernamehelp" type="text">
+                <div id="usernamehelp" class="form-text" style="color: white;">
+                    Be mindful of strong language when choosing a username
+                </div>
+            </div>
+            <div class="form-group mt-4">
+                <label for="email">Email</label>
+                <input class="form-control" name="email" placeholder="example@gmail.com" autocomplete="off" id="email" aria-describedby="emailhelp" type="email">
+                <div id="emailhelp" class="form-text" style="color: white;">
+                    Your private info will never be shared with anyone
+                </div>
+            </div>
+            <div class="form-group mt-4">
+                <label for="password">Password</label>
+                <input class="form-control" name="new-password" placeholder="password" autocomplete="off" id="password" aria-describedby="passwordhelp" type="password">
+                <div id="passwordhelp" class="form-text" style="color: white;">
+                    Your password should be at least 8 characters long and must be alpha-numerical
+                </div>
+            </div>
+            <div class="form-group mt-4">
+                <label for="confirmation">Repeat Password</label>
+                <input class="form-control" name="new-confirmation" placeholder="repeat password" autocomplete="off" id="confirmation" aria-describedby="confirmationhelp" type="password">
+                <div id="confirmationhelp" class="form-text" style="color: white;">
+                    Re-type your password
+                </div>
+            </div>
+            <fieldset class="mt-4">
+                <legend>Age Group</legend>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="age_group" id="ageGroup1" value="13-17">
+                    <label class="form-check-label" for="ageGroup1">
+                      13-17 years
+                    </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="age_group" id="ageGroup2" value="18-24">
+                  <label class="form-check-label" for="ageGroup2">
+                    18-24 years
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="age_group" id="ageGroup3" value="25-34">
+                  <label class="form-check-label" for="ageGroup3">
+                    25-34 years
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="age_group" id="ageGroup4" value="35-44">
+                  <label class="form-check-label" for="ageGroup4">
+                    35-44 years
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="age_group" id="ageGroup5" value="45-54">
+                  <label class="form-check-label" for="ageGroup5">
+                    45-54 years
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="age_group" id="ageGroup6" value="55+">
+                  <label class="form-check-label" for="ageGroup6">
+                    55+ years
+                  </label>
+                </div>
+            </fieldset>
+            <fieldset class="mt-4">
+                <legend>Gender</legend>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="gender1" value="male">
+                    <label class="form-check-label" for="gender1">Male</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="gender2" value="female">
+                    <label class="form-check-label" for="gender2">Female</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="gender3" value="no gender">
+                    <label class="form-check-label" for="gender3">Prefer not to say</label>
+                </div>
+            </fieldset>
+            <div>
+                <button class="btn btn-outline-primary d-flex mx-auto" type="submit" id="button2">Register</button>
+            </div>
+            <div class="mt-4">
+              <p style="color: white; font-style: italic;">Already have an account <a
+              href="{% url 'login' %}" style="font-style: italic;">Login here!</a></p>
+            </div>
+        </form>
+    </div>
+{% endblock %}

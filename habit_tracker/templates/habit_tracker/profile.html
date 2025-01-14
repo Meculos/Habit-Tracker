@@ -1,0 +1,92 @@
+{% extends "habit_tracker/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Profile Page - Habit Tracker
+{% endblock %}
+
+{% block main %}
+    <div>
+        <div class="row">
+            <div class="col-md-4 col-sm-12" id="pcolumn1">
+                <div class="text-center mt-4">
+                    <img src="{{ user.profile_picture.url }}" class="rounded-circle" alt="profile_picture" style="height: 150px; width: 150px;
+                    object-fit: cover;">
+                </div>
+                <div class="text-center mt-6">
+                    <h5>{{ user.username|capfirst }}</h5>
+                </div>
+                <div class="text-center mt-3">
+                    <p>{{ user.user_bio|capfirst }}</p>
+                </div>
+                {% if user.id == main.id %}
+                    <div class="text-center mt-4">
+                        <a href="{% url 'edit_profile' %}">
+                            <i class="fas fa-pencil-alt"></i> Edit Profile
+                        </a>
+                    </div>
+                    <div class="text-center mt-1">
+                        <a href="{% url 'edit_profile_picture' %}">
+                            <i class="fas fa-camera-retro"></i> Edit Profile Picture
+                        </a>
+                    </div>
+                {% else %}
+                    {% if are_friends %}
+                        <!-- Already Friends -->
+                        <div class="text-center mt-4">
+                            <p style="font-style: italic;">Friends</p>
+                        </div>
+                    {% elif request %}
+                        {% if request.status == "pending" %}
+                            <!-- Friend Request Pending -->
+                            <div class="text-center mt-4">
+                                <button class="btn btn-secondary" disabled>
+                                    <i class="fas fa-handshake"></i> Request Pending
+                                </button>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <!-- Send Friend Request -->
+                        <div class="text-center mt-4">
+                            {% csrf_token %}
+                            <a href="#" class="btn btn-primary send_friend_request" data-user-id="{{ user.id }}">
+                                <i class="fas fa-handshake"></i> Send Friend Request
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="col-md-8 col-sm-12" id="pcolumn2">
+                <div class="mt-4">
+                    <h5>Information</h5>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-6">
+                        <div><h5>Name</h5></div>
+                        <div class="mt-1">{{ user.real_name|capfirst }}</div>
+                    </div>
+                    <div class="col-6">
+                        <div><h5>Age Group</h5></div>
+                        <div class="mt-1">{{ user.age_group|capfirst }}</div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <div><h5>Gender</h5></div>
+                        <div class="mt-1">{{ user.gender|capfirst }}</div>
+                    </div>
+                    <div class="col-6">
+                        <div><h5>Email</h5></div>
+                        <div class="mt-1">{{ user.email|capfirst }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="{% static 'habit_tracker/send_friend_request.js' %}"></script>
+{% endblock %}

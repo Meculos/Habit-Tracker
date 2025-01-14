@@ -1,0 +1,48 @@
+{% extends "habit_tracker/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Take Challenge - Habit Tracker
+{% endblock %}
+
+{% block main %}
+<div class="challenge-container p-4 rounded shadow-sm bg-light">
+    <!-- Challenge Details -->
+    <div class="mb-3 text-center">
+        <h2 class="text-primary">{{ challenge.name }}</h2>
+        <p class="text-muted">Earn <span class="fw-bold text-success">{{ challenge.point }}</span> points!</p>
+    </div>
+
+    <!-- Timer -->
+    <div class="mb-3 text-center">
+        <div id="timer" class="timer-display py-2 px-4 text-white bg-danger rounded-pill d-inline-block"></div>
+    </div>
+
+    <!-- Challenge Question -->
+    <div class="mb-3">
+        <p class="challenge-question fw-bold">{{ challenge.question }}</p>
+    </div>
+
+    <!-- Answer Input -->
+    <div class="answer-section mt-4">
+        {% csrf_token %}
+        <input 
+            type="text" 
+            id="challengeAnswer" 
+            placeholder="Enter your answer..." 
+            autofocus autocomplete="off" 
+            class="form-control py-2 px-3 rounded-pill border-primary">
+        <button 
+            id="submitButton"
+            class="btn btn-primary mt-3 rounded-pill px-4 fw-bold" 
+            data-challenge-id="{{ challenge.id }}">
+            Submit Answer
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="{% static 'habit_tracker/challenge.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,333 @@
+body {
+    background-color: #bec5ad !important;
+}
+
+#homepagenav {
+    background-color: #221d23 !important;
+    color: #bec5ad !important;
+}
+
+#registerForm, #editProfileForm {
+    background-color: #221d23 !important;
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+    align-items: center;
+    max-width: fit-content;
+}
+
+#loginForm, #habitCreationForm, #habitLogForm {
+    background-color: #221d23 !important;
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+    align-items: center;
+    width: 100vh;
+}
+
+@media (max-width: 768px) {
+    #loginForm, #habitCreationForm, #habitLogForm {
+        width: 50vh;
+    }
+}
+
+#button2, #button3, #button4, #button5, #editButton{
+    background-color: transparent;
+    border-color: white;
+    color: white;
+    margin-left: 100px;
+    margin-top: 20px;
+}
+.logButton, .activeButton {
+    background-color: transparent;
+    border-color: white;
+    color: white;
+}
+.logButton:hover {
+    background-color: white !important;
+    color: #221d23 !important;
+}
+.activeButton:hover {
+    background-color: white !important;
+    color: #221d23 !important;
+}
+
+#button4:hover {
+    background-color: white !important;
+    color: #221d23 !important;
+}
+
+#button5:hover {
+    background-color: white !important;
+    color: #221d23 !important;
+}
+
+#button3:hover {
+    background-color: white !important;
+    color: #221d23 !important;
+}
+
+#button2:hover {
+    background-color: white !important;
+    color: #221d23 !important;
+}
+#editButton:hover {
+    background-color: white !important;
+    color: #221d23 !important;
+}
+#column1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#text1 {
+    font-family: 'Courier New', Courier, monospace;
+    color: blue;
+}
+
+#text2 {
+    font-style: italic;
+    color: blue;
+}
+
+#button1 {
+    border-color: blue;
+    color: blue;
+}
+
+#button:hover {
+    background-color: blue !important;
+    color: white !important;
+}
+
+#allHabitsDiv, #allLogsDiv, #archivedHabitsDiv {
+    background-color: #221d23;
+    color: white;
+    padding: 20px;
+}
+
+#habitsButton, #createHabitButton, #activityButton, #archive {
+    background-color: transparent !important;
+    border-color: #221d23 !important;
+    color: #221d23 !important;
+}
+
+#archive:hover {
+    background-color: #221d23 !important;
+    color: white !important;
+}
+#habitsButton:hover {
+    background-color: #221d23 !important;
+    color: white !important;
+}
+#createHabitButton:hover {
+    background-color: #221d23 !important;
+    color: white !important;
+}
+#activityButton:hover {
+    background-color: #221d23 !important;
+    color: white !important;
+}
+
+.custom-sidebar {
+    background-color: #221d23;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 20px;
+    height: fit-content; /* Full height */
+    position: fixed;
+    right: 30px;
+    z-index: 1030;
+    box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.2); /* Optional shadow for effect */
+}
+
+@media (max-width: 768px) {
+    .custom-sidebar {
+        position: relative; /* Reverts the sidebar's fixed positioning */
+        height: auto; /* Allow it to take natural height */
+        width: 100%; /* Full width on small screens */
+        top: auto; /* Reset top for smaller screens */
+        right: 0; /* No right space on smaller screens */
+        border-radius: 0;
+    }
+}
+
+#sidebar {
+    background-color: #221d23;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#pcolumn1 {
+    background-color: #221d23;
+    color: white;
+    padding: 50px;
+    border-radius: 10px;
+}
+#pcolumn2 {
+    background-color: white;
+    color: black;
+    padding: 50px;
+    border-radius: 10px;
+}
+
+#commnav, #smallcommnav, #postsDiv, #friendnav, #smallfriendnav {
+    border-right: 2px solid #221d23;
+    margin-top: 0;
+}
+
+#commheader {
+    background-color: #221d23;
+    height: 50px;
+    align-items: center;
+}
+#commtext {
+    color: white;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.commentbutton {
+    border-color: #221d23;
+    background-color: transparent;
+    color: #221d23;
+    font-style: italic;
+}
+.commentbutton:hover {
+    border: 2px solid gray;
+    color: white;
+    font-style: italic;
+    background-color: transparent;
+}
+
+#notificationsDropdown {
+    margin-left: 300px;
+}
+
+#chat-container {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+}
+
+.message-row {
+    display: flex;
+    align-items: flex-end;
+}
+
+.message-row.outgoing {
+    justify-content: flex-end;
+}
+
+.message-row.incoming {
+    justify-content: flex-start;
+}
+
+.message-content {
+    max-width: 70%;
+    border-radius: 20px;
+    position: relative;
+}
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+#chat-messages {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#chat-input {
+    flex-grow: 1;
+    border-radius: 20px;
+    padding: 10px 15px;
+}
+
+button#send-button {
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+/* Default state */
+.navbar-toggler {
+    border-color: #007bff;
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath fill='%23007bff' d='M0 2h30v2H0zm0 6h30v2H0zm0 6h30v2H0zm0 6h30v2H0zm0 6h30v2H0Z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+/* Hover state */
+.navbar-toggler:hover {
+    border-color: #0056b3;
+}
+.navbar-toggler-icon:hover {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath fill='%230056b3' d='M0 2h30v2H0zm0 6h30v2H0zm0 6h30v2H0zm0 6h30v2H0zm0 6h30v2H0Z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+/* Focus state */
+.navbar-toggler:focus {
+    border-color: #28a745;
+}
+.navbar-toggler-icon:focus {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath fill='%2328a745' d='M0 2h30v2H0zm0 6h30v2H0zm0 6h30v2H0zm0 6h30v2H0zm0 6h30v2H0Z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.challenge-container {
+    max-width: 600px;
+    margin: 0 auto;
+    border: 2px solid #007bff;
+    background-color: #ffffff;
+}
+
+.challenge-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.timer-display {
+    font-size: 1.2rem;
+    font-weight: bold;
+    animation: pulse 1s infinite;
+}
+
+.challenge-question {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.answer-section input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn-primary {
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+    transform: translateY(-2px);
+}
+
+@keyframes pulse {
+    0%, 100% {
+        background-color: #dc3545;
+    }
+    50% {
+        background-color: #ff5b5b;
+    }
+}
+
+

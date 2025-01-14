@@ -1,0 +1,105 @@
+{% extends "habit_tracker/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Edit Profile - Habit Tracker
+{% endblock %}
+
+{% block main %}
+    <div>
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-dark mx-auto" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+        <form method="post" action="{% url 'edit_profile' %}" class="mx-auto" autocomplete="off" id="editProfileForm">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="editname">Name</label>
+                <input class="form-control" name="editrealname" value="{{ profile.real_name }}" autofocus autocomplete="realname" id="editname" aria-describedby="realnamehelp" type="text">
+                <div id="realnamehelp" class="form-text" style="color: white";>
+                    Your private info will never be shared with anyone
+                </div>
+            </div>
+            <div class="form-group mt-4">
+                <label for="editusername">Username</label>
+                <input class="form-control" name="editusername" value="{{ profile.username }}" autocomplete="new-username" id="editusername" aria-describedby="usernamehelp" type="text">
+                <div id="usernamehelp" class="form-text" style="color: white;">
+                    Be mindful of strong language when choosing a username
+                </div>
+            </div>
+            <div class="form-group mt-4">
+                <label for="editbio">Bio</label>
+                <textarea class="form-control" autocomplete="off" name="editbio" id="editbio" rows="5">{{ profile.user_bio }}</textarea>
+            </div>
+            <div class="form-group mt-4">
+                <label for="editemail">Email</label>
+                <input class="form-control" name="editemail" value="{{ profile.email }}" autocomplete="off" id="editemail" aria-describedby="emailhelp" type="email">
+                <div id="emailhelp" class="form-text" style="color: white;">
+                    Your private info will never be shared with anyone
+                </div>
+            </div>
+            <fieldset class="mt-4">
+                <legend>Age Group</legend>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="edit_age_group" id="ageGroup1" value="13-17">
+                    <label class="form-check-label" for="ageGroup1">
+                      13-17 years
+                    </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="edit_age_group" id="ageGroup2" value="18-24">
+                  <label class="form-check-label" for="ageGroup2">
+                    18-24 years
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="edit_age_group" id="ageGroup3" value="25-34">
+                  <label class="form-check-label" for="ageGroup3">
+                    25-34 years
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="edit_age_group" id="ageGroup4" value="35-44">
+                  <label class="form-check-label" for="ageGroup4">
+                    35-44 years
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="edit_age_group" id="ageGroup5" value="45-54">
+                  <label class="form-check-label" for="ageGroup5">
+                    45-54 years
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="edit_age_group" id="ageGroup6" value="55+">
+                  <label class="form-check-label" for="ageGroup6">
+                    55+ years
+                  </label>
+                </div>
+            </fieldset>
+            <fieldset class="mt-4">
+                <legend>Gender</legend>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="editgender" id="gender1" value="male">
+                    <label class="form-check-label" for="gender1">Male</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="editgender" id="gender2" value="female">
+                    <label class="form-check-label" for="gender2">Female</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="editgender" id="gender3" value="no gender">
+                    <label class="form-check-label" for="gender3">Prefer not to say</label>
+                </div>
+            </fieldset>
+            <div>
+                <button class="btn btn-outline-primary d-flex mx-auto" type="submit" id="editButton">
+                    <i class="fas fa-pencil-alt"></i>   Edit Profile
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

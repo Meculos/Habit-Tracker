@@ -1,0 +1,201 @@
+{% extends "habit_tracker/layout.html" %}
+{% load static %}
+
+{% block title %}
+    User Dashboard - Habit Tracker
+{% endblock %}
+
+{% block nav %}
+    <nav id="homepagenav" class="navbar bg-body-tertiary px-3 mt-4">
+        <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>                  
+        <a class="navbar-brand" href="#">Habit Tracker</a>
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}#navitem1">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}#navitem2">Services</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}#navitem3">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+            </li>
+            {% if not user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <div class="dropdown d-flex mb-3 justify-content-end d-md-none">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-bell"></i>
+            {% if notifications.count > 0 %}
+            <span class="badge bg-danger">{{ notifications.count }}</span>
+            {% endif %}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="notificationsDropdown">
+            {% for notification in notifications %}
+            <li class="notification-item">
+                <a class="dropdown-item" href="{{ notification.link }}">
+                    {{ notification.message }}
+                </a>
+                {% if notification.friend_request %}
+                <span class="d-flex mt-2">
+                    {% csrf_token %}
+                    <button class="btn btn-success accept-friend-request" data-request-id="{{ notification.friend_request.id }}">
+                        Accept
+                    </button>
+                    <button class="btn btn-danger deny-friend-request" data-request-id="{{ notification.friend_request.id }}">
+                        Deny
+                    </button>
+                </span>
+                {% else %}
+                    <a class="btn btn-primary" href="{% url 'read' notification.id %}">Mark as read</a>
+                {% endif %}
+            </li>
+            {% endfor %}
+            {% if notifications.count == 0 %}
+            <li><p class="dropdown-item">No new notifications</p></li>
+            {% endif %}
+        </ul>   
+    </div>
+    <div class="row">
+        <div class="col-9 col-md-9 col-sm-12 mb-3">
+            <div class="row">
+                <div class="col-md-4 col-sm-12 mb-3 d-flex">
+                    <div class="card flex-grow-1 shadow-lg border-primary">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">
+                                <i class="fas fa-book"></i> Log Book
+                            </h5>
+                            <p class="card-text">Create and log habits daily to increase streak and earn achievements</p>
+                            <a href="{% url 'log_page' %}" class="btn btn-outline-primary rounded-pill">To log book</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-3 d-flex">
+                    <div class="card flex-grow-1 shadow-lg border-info">
+                        <div class="card-body">
+                            <h5 class="card-title text-info">
+                                <i class="fas fa-trophy"></i> Challenges
+                            </h5>
+                            <p class="card-text">Participate in community challenges and earn exclusive badges</p>
+                            <a href="{% url 'challenge' %}" class="btn btn-outline-info rounded-pill">To challenges</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-3 d-flex">
+                    <div class="card flex-grow-1 shadow-lg border-success">
+                        <div class="card-body">
+                            <h5 class="card-title text-success">
+                                <i class="fas fa-users"></i> Community
+                            </h5>
+                            <p class="card-text">Interact with the community and share your progress here</p>
+                            <a href="{% url 'community' %}" class="btn btn-outline-success rounded-pill">To community</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6 col-sm-6 mb-3 d-flex" id="achievementColumn">
+                    <div class="card flex-grow-1 shadow-lg border-warning">
+                        <div class="card-body">
+                            <h5 class="card-title text-warning">
+                                <i class="fas fa-star text-warning"></i> Achievements
+                            </h5>
+                            {% if user_achievements %}
+                                {% for achievement in user_achievements %}
+                                    <p class="card-text">
+                                        You earned the achievement: <i class="{{ achievement.achievement.icon }}"></i> {{ achievement.achievement.name }}
+                                    </p>
+                                {% endfor %}
+                                <a href="#" class="btn btn-outline-warning rounded-pill">View All Achievements</a>
+                            {% else %}
+                                <p class="card-text">No achievements earned yet</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 mb-3 d-flex" id="friendscorner">
+                    <div class="card flex-grow-1 shadow-lg border-danger">
+                        <div class="card-body">
+                            <h5 class="card-title text-danger">
+                                <i class="fas fa-user-friends"></i> Social Corner
+                            </h5>
+                            <p class="card-text">
+                                This is the Social corner. Here you can meet and connect with people who share your goals and vision.
+                                Add friends, share challenges, support each other and most importantly, have fun.
+                            </p>
+                            <a class="btn btn-outline-danger rounded-pill" href="{% url 'friends_corner' %}">Visit Corner</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-3 d-none d-md-block sidebar mt-3 custom-sidebar">
+            <div class="dropdown mb-3 d-none d-md-block">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-bell"></i>
+                    {% if notifications.count > 0 %}
+                    <span class="badge bg-danger">{{ notifications.count }}</span>
+                    {% endif %}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="notificationsDropdown">
+                    {% for notification in notifications %}
+                    <li class="notification-item">
+                        <a class="dropdown-item" href="{{ notification.link }}">
+                            {{ notification.message }}
+                        </a>
+                        {% if notification.friend_request %}
+                        <span class="d-flex mt-2">
+                            {% csrf_token %}
+                            <button class="btn btn-success accept-friend-request" data-request-id="{{ notification.friend_request.id }}">
+                                Accept
+                            </button>
+                            <button class="btn btn-danger deny-friend-request" data-request-id="{{ notification.friend_request.id }}">
+                                Deny
+                            </button>
+                        </span>
+                        {% else %}
+                            <a class="btn btn-primary" href="{% url 'read' notification.id %}">Mark as read</a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                    {% if notifications.count == 0 %}
+                    <li><p class="dropdown-item">No new notifications</p></li>
+                    {% endif %}
+                </ul>                
+            </div>
+            <div class="text-center">
+                <img src="{{ user.profile_picture.url }}" class="rounded-circle" alt="profile_picture" style="width: 150px; height: 150px;
+                object-fit: cover;">
+            </div>
+            <div class="text-center">
+                <h5 class="d-inline-block text-truncate">{{ user.username|capfirst }}</h5>
+                <p>{{ user.user_bio|capfirst }}</p>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' user.id %}">To Profile</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="{% static 'habit_tracker/handleFriendRequest.js' %}"></script>
+{% endblock %}
