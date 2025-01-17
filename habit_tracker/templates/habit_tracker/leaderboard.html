@@ -1,0 +1,59 @@
+{% extends "habit_tracker/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Leaderboard - Habit Tracker
+{% endblock %}
+
+{% block main %}
+    {% if users %}
+        <div class="row">
+            {% for user in users %}
+                <div class="d-flex align-items-center border rounded p-2 mb-3" style="background-color: #bec5ad; margin: 20px;">
+                    <div class="flex-shrink-0">
+                        <img src="{{ user.profile_picture.url }}" 
+                            alt="Profile Picture" 
+                            class="rounded-circle" 
+                            style="height: 75px; width: 75px; object-fit: cover; border: 2px solid #ddd;">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <a href="{% url 'profile' user.id %}">
+                            <h5 class="mb-1">
+                                {{ user.username|capfirst }}
+                            </h5>
+                        </a>
+                    </div>
+                    <div>
+                        {{ user.points }} points
+                    </div>
+                </div>               
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="d-flex text-center">
+            <p>Leaderboard is empty. Go complete a challenge to climb the ranks.</p>
+        </div>
+    {% endif %}
+    {% if page_obj.has_other_pages %}
+        <nav>
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+
+{% endblock %}

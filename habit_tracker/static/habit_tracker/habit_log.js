@@ -18,9 +18,19 @@ document.addEventListener('DOMContentLoaded', function() {
             activeLog(event);
         }
     });
+    document.querySelector('#showHabits').addEventListener('click', function(event) {
+        if (event.target.classList.contains('deleteButton')) {
+            deleteHabit(event);
+        }
+    });
     document.querySelector('#archivedHabits').addEventListener('click', function(event) {
         if (event.target.classList.contains('inactiveButton')) {
             inactiveLog(event);
+        }
+    });
+    document.querySelector('#showHabits').addEventListener('click', function(event) {
+        if (event.target.classList.contains('renewButton')) {
+            renewHabit(event);
         }
     });
     document.querySelector('#habitLogForm').addEventListener('submit', function (event) {
@@ -48,19 +58,48 @@ function allHabits() {
 
         data.habits.forEach(habit => {
             const habitElement = allHabitTemplate.content.cloneNode(true)
+            const logButton = habitElement.querySelector('.logButton');
+            const activeButton = habitElement.querySelector('.activeButton');
 
             habitElement.querySelector('.habitName').textContent = habit.habit_name
             habitElement.querySelector('.habitDescription').textContent = habit.description
-            habitElement.querySelector('.endHabit').textContent = `${habit.days_left} days left`
+            if (habit.days_left > 0) {
+                habitElement.querySelector('.endHabit').textContent = `${habit.days_left} days left`
+            } else {
+                habitElement.querySelector('.endHabit').textContent = "Completed"
+                if (logButton) {
+                    logButton.classList.remove('logButton');
+                    logButton.classList.add('deleteButton');
+                    logButton.innerHTML = 'Remove Habit';
+                }
+                if (activeButton) {
+                    activeButton.classList.remove('activeButton');
+                    activeButton.classList.add('renewButton');
+                    activeButton.innerHTML = 'Renew Habit';
+                }
+            }
             habitElement.querySelector('.habitFrequency').textContent = `Remember to log ${habit.frequency}`
             
-            const logButton = habitElement.querySelector('.logButton');
-            const activeButton = habitElement.querySelector('.activeButton');
-            activeButton.dataset.habitId = habit.id;
-            logButton.dataset.habitId = habit.id;
+            if (logButton) {
+                logButton.dataset.habitId = habit.id;
+                logButton.addEventListener('click', logHabit);
+            }
+            if (activeButton) {
+                activeButton.dataset.habitId = habit.id;
+                activeButton.addEventListener('click', activeLog);
+            }
 
-            logButton.addEventListener('click', logHabit);
-            activeButton.addEventListener('click', activeLog);
+            const deleteButton = habitElement.querySelector('.deleteButton');
+            const renewButton = habitElement.querySelector('.renewButton');
+
+            if (deleteButton) {
+                deleteButton.dataset.habitId = habit.id;
+                deleteButton.addEventListener('click', deleteHabit);
+            }
+            if (renewButton) {
+                renewButton.dataset.habitId = habit.id;
+                renewButton.addEventListener('click', renewHabit);
+            }
 
             allHabitContainer.appendChild(habitElement)
         })
@@ -259,10 +298,34 @@ function activeLog(event) {
     })
 }
 
+function deleteHabit(event) {
+    const habit_id = event.target.dataset.habitId;
+    const csrfToken = document.querySelector('#activeButtonCsrfToken').value;
+
+    fetch('/habit_tracker/api/habit_tracker/delete_habit/', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'X-CSRFToken': csrfToken
+        },
+        body: JSON.stringify({habit_id: habit_id})
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            console.log(data.message)
+            allHabits()
+        } else {
+            alert(data.error)
+        }
+    })
+    .catch(error => console.log('Error deleting habit: ', error))
+}
+
 function inactiveLog(event) {
     const inactiveButtonId = event.target.dataset.habitId
     console.log("inactive id: ", inactiveButtonId)
-    const csrfToken = document.querySelector('#inactiveButtonCsrfToken').value;
+    const csrfToken = document.querySelector('#deleteButtonCsrfToken').value;
 
     fetch('/habit_tracker/api/habit_tracker/active/', {
         method: 'POST',
@@ -271,6 +334,30 @@ function inactiveLog(event) {
             'X-CSRFToken': csrfToken
         },
         body: JSON.stringify({'habit_id': inactiveButtonId})
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.message) {
+            console.log(result.message)
+            allHabits()
+        } else {
+            console.log(result.error)
+        }
+    })
+    .catch(error => console.log(error))
+}
+
+function renewHabit(event) {
+    const habit_id = event.target.dataset.habitId
+    const csrfToken = document.querySelector('#renewButtonCsrfToken').value;
+
+    fetch('/habit_tracker/api/habit_tracker/renew_habit/', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'X-CSRFToken': csrfToken
+        },
+        body: JSON.stringify({habit_id: habit_id})
     })
     .then(response => response.json())
     .then(result => {

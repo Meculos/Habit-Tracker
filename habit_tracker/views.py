@@ -12,9 +12,9 @@ from django.core.files.base import ContentFile
 import json
 from .achievement import check_and_award_achievements
 from django.db.models import Q
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
-from .models import CustomUser, Habit, LogEntry, Achievement, UserAchievement, Post, Comment, FriendRequest, ChatMessage, Notification, Challenge,UserChallenge
+from .models import CustomUser, Habit, LogEntry, Achievement, UserAchievement, Post, Comment, FriendRequest, ChatMessage, Notification, Challenge,UserChallenge, PointsHistory
 
 # Create your views here.
 def index(request):
@@ -151,6 +151,16 @@ def activity_page(request):
     return JsonResponse({"logs": logs})
 
 def logging_page(request):
+    habits = Habit.objects.filter(user=request.user)
+    for habit in habits:
+        if habit.end_days <= 0 and not habit.notification_sent:
+            Notification.objects.create(
+                user = request.user,
+                message = f"You have completed tracking the habit: {habit.name}",
+                link = "/habit_tracker/logging_page/"
+            )
+            habit.notification_sent = True
+            habit.save()
     return render(request, "habit_tracker/log_habit.html")
 
 def log_habit(request):
@@ -611,6 +621,15 @@ def check_challenge(request, challenge_id):
                     "attempts_left": 0,
                     "message": "You've already completed this challenge."
                 }, status=200)
+            
+            if user_challenge.attempts_left <= 0:
+                # Mark challenge as completed due to no attempts left
+                user_challenge.completed = True
+                user_challenge.save()
+                return JsonResponse({
+                    "message": "No attempts left. Challenge locked.",
+                    "attempts_left": 0
+                }, status=200)
 
             data = json.loads(request.body)
             answer = data.get("answer", "").lower().strip()
@@ -618,7 +637,8 @@ def check_challenge(request, challenge_id):
             if answer in [ans.lower() for ans in challenge.answers]:
                 user.points += challenge.point  # Add points
                 user.save()
-
+                PointsHistory.objects.create(user=user, points=user.points)
+                
                 user_challenge.completed = True  # Mark as completed
                 user_challenge.save()
 
@@ -639,6 +659,8 @@ def check_challenge(request, challenge_id):
                     "message": "Incorrect answer. Try again."
                 })
             else:
+                user_challenge.completed = True
+                user_challenge.save()
                 return JsonResponse({
                     "correct": False,
                     "attempts_left": 0,
@@ -651,3 +673,77 @@ def check_challenge(request, challenge_id):
         return JsonResponse({"error": str(e)}, status=500)
 
     return JsonResponse({"error": "Invalid request method."}, status=400)
+
+def leaderboard(request):
+    users = CustomUser.objects.all().order_by("-points")
+    paginator = Paginator(users, 10)  # Show 10 users per page
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    return render(request, "habit_tracker/leaderboard.html", {
+        "users": users,
+        "page_obj": page_obj
+    })
+
+def delete_habit(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        habit_id = data.get("habit_id")
+        try:
+            habit = Habit.objects.get(id=habit_id)
+            habit.delete()  # Call delete on the retrieved habit instance
+            return JsonResponse({"message": "Habit deleted successfully"})
+        except Habit.DoesNotExist:
+            return JsonResponse({"error": "Habit not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+    return JsonResponse({"error": "Invalid request method"}, status=405)
+    
+def renew_habit(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        habit_id = data.get("habit_id")
+
+        try:
+            habit = Habit.objects.get(id=habit_id)
+            habit.start_date = datetime.now().date()
+            habit.notification_sent = False  # Reset notification sent flag
+            habit.save()
+
+            return JsonResponse({
+                    "success": True,
+                    "message": f"The habit '{habit.name}' has been renewed!",
+                    "new_end_days": habit.end_days,
+                })
+        except Habit.DoesNotExist:
+            return JsonResponse({
+                    "success": False,
+                    "error": "Habit not found."
+                }, status=404)
+    return JsonResponse({"success": False, "error": "Invalid request method."}, status=405)
+
+def points_history(request):
+    user = request.user  # Assume the user is logged in
+    points_data = PointsHistory.objects.filter(user=user).order_by("timestamp")
+
+    data = {
+        "points": [
+            {"date": point.timestamp.strftime("%Y-%m-%d"), "points": point.points}
+            for point in points_data
+        ]
+    }
+    return JsonResponse(data)
+
+def habit_completion_rate(request):
+    habits = Habit.objects.filter(user=request.user)
+    
+    # Aggregate logs across all habits
+    all_logs = LogEntry.objects.filter(habit__in=habits)
+    
+    total_logs = all_logs.count()
+    completed_logs = all_logs.filter(status=True).count()
+    missed_logs = total_logs - completed_logs
+
+    return JsonResponse({
+        "completed": completed_logs,
+        "missed": missed_logs
+    })

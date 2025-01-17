@@ -55,6 +55,7 @@ class Habit(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="habits") # link to User model
     name = models.CharField(max_length=100) # name of habit to keep track of eg no smoking
     description = models.TextField(blank=True, null=True) # description of the model
+    notification_sent = models.BooleanField(default=False)
     frequency = models.CharField(
         max_length=20,
         choices=[("daily", "Daily"), ("weekly", "Weekly"), ("monthly", "Monthly")],
@@ -265,5 +266,13 @@ def notify_users_of_new_challenge(sender, instance, created, **kwargs):
             Notification.objects.create(
                 user=user,
                 message=f"New challenge '{instance.name}' is now available! Earn {instance.point} points by completing it.",
-                link=f"/challenges/"  # Link to the challenge detail page
+                link=f"/habit_tracker/challenges/"  # Link to the challenge detail page
             )
+
+class PointsHistory(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="points_history")
+    points = models.IntegerField()  # Points at a given time
+    timestamp = models.DateTimeField(auto_now_add=True)  # When the points were recorded
+
+    def __str__(self):
+        return f"{self.user.username} - {self.points} points on {self.timestamp}"

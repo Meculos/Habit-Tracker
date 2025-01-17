@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 attemptsLeft = data.attempts_left;
-                if (data.completed) {
+                if (data.completed || attemptsLeft === 0) {
                     lockChallenge();
                     alert("You've already completed this challenge.");
                 } else {

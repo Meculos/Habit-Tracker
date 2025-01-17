@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Habit, CustomUser, LogEntry, Achievement, UserAchievement, Post, Comment, FriendRequest, ChatMessage, Notification, Challenge
+from .models import Habit, CustomUser, LogEntry, Achievement, UserAchievement, Post, Comment, FriendRequest, ChatMessage, Notification, Challenge, PointsHistory
 
 # Register your models here.
 
@@ -19,3 +19,4 @@ admin.site.register(FriendRequest)
 admin.site.register(ChatMessage)
 admin.site.register(Notification)
 admin.site.register(Challenge)
+admin.site.register(PointsHistory)

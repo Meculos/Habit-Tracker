@@ -330,4 +330,17 @@ button#send-button {
     }
 }
 
+#pointsChart, #completionRateChart {
+    max-width: 1600px;
+    max-height: 400px;
+    width: 100%; /* Makes it responsive */
+    height: auto;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
 

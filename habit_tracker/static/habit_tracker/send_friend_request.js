@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+    fetch('/habit_tracker/api/habit_tracker/points_history/')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            const labels = data.points.map(item => item.date); // Dates for the x-axis
+            const points = data.points.map(item => item.points); // Points for the y-axis
+
+            renderPointsChart(labels, points);
+        })
+        .catch(error => console.error('Error fetching points history:', error));
+
     document.querySelectorAll('.send_friend_request').forEach(button => {
         button.addEventListener('click', (event) => {
             event.preventDefault();
@@ -33,3 +44,50 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+let pointsChartInstance; // Global variable to keep track of the chart instance
+
+function renderPointsChart(labels, points) {
+    const ctx = document.getElementById('pointsChart').getContext('2d');
+    
+    // Destroy the existing chart if it exists
+    if (pointsChartInstance) {
+        pointsChartInstance.destroy();
+    }
+
+    // Create a new chart
+    pointsChartInstance = new Chart(ctx, {
+        type: 'line', // Choose the chart type
+        data: {
+            labels: labels, // Dates on the x-axis
+            datasets: [{
+                label: 'Points Over Time',
+                data: points, // Points on the y-axis
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fill color
+                borderColor: 'rgba(75, 192, 192, 1)', // Line color
+                borderWidth: 1 // Line thickness
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    beginAtZero: true, // Start the y-axis at 0
+                    title: {
+                        display: true,
+                        text: 'Points'
+                    }
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+}
+
+

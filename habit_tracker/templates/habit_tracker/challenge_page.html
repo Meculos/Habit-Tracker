@@ -6,40 +6,40 @@
 {% endblock %}
 
 {% block main %}
-<div class="challenge-container p-4 rounded shadow-sm bg-light">
-    <!-- Challenge Details -->
-    <div class="mb-3 text-center">
-        <h2 class="text-primary">{{ challenge.name }}</h2>
-        <p class="text-muted">Earn <span class="fw-bold text-success">{{ challenge.point }}</span> points!</p>
-    </div>
+    <div class="challenge-container p-4 rounded shadow-sm bg-light">
+        <!-- Challenge Details -->
+        <div class="mb-3 text-center">
+            <h2 class="text-primary">{{ challenge.name }}</h2>
+            <p class="text-muted">Earn <span class="fw-bold text-success">{{ challenge.point }}</span> points!</p>
+        </div>
 
-    <!-- Timer -->
-    <div class="mb-3 text-center">
-        <div id="timer" class="timer-display py-2 px-4 text-white bg-danger rounded-pill d-inline-block"></div>
-    </div>
+        <!-- Timer -->
+        <div class="mb-3 text-center">
+            <div id="timer" class="timer-display py-2 px-4 text-white bg-danger rounded-pill d-inline-block"></div>
+        </div>
 
-    <!-- Challenge Question -->
-    <div class="mb-3">
-        <p class="challenge-question fw-bold">{{ challenge.question }}</p>
-    </div>
+        <!-- Challenge Question -->
+        <div class="mb-3">
+            <p class="challenge-question fw-bold">{{ challenge.question }}</p>
+        </div>
 
-    <!-- Answer Input -->
-    <div class="answer-section mt-4">
-        {% csrf_token %}
-        <input 
-            type="text" 
-            id="challengeAnswer" 
-            placeholder="Enter your answer..." 
-            autofocus autocomplete="off" 
-            class="form-control py-2 px-3 rounded-pill border-primary">
-        <button 
-            id="submitButton"
-            class="btn btn-primary mt-3 rounded-pill px-4 fw-bold" 
-            data-challenge-id="{{ challenge.id }}">
-            Submit Answer
-        </button>
+        <!-- Answer Input -->
+        <div class="answer-section mt-4">
+            {% csrf_token %}
+            <input 
+                type="text" 
+                id="challengeAnswer" 
+                placeholder="Enter your answer..." 
+                autofocus autocomplete="off" 
+                class="form-control py-2 px-3 rounded-pill border-primary">
+            <button 
+                id="submitButton"
+                class="btn btn-primary mt-3 rounded-pill px-4 fw-bold" 
+                data-challenge-id="{{ challenge.id }}">
+                Submit Answer
+            </button>
+        </div>
     </div>
-</div>
 {% endblock %}
 
 {% block script %}

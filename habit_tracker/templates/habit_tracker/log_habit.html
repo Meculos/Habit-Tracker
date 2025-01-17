@@ -23,6 +23,8 @@
             <span>
                 <button class="btn btn-outline-primary logButton" data-habit-id="">Log Habit</button>
                 <input type="hidden" name="csrfmiddlewaretoken" id="activeButtonCsrfToken" value="{{ csrf_token }}">
+                <input type="hidden" name="csrfmiddlewaretoken" id="renewButtonCsrfToken" value="{{ csrf_token }}">
+                <input type="hidden" name="csrfmiddlewaretoken" id="deleteButtonCsrfToken" value="{{ csrf_token }}">
                 <button class="btn btn-outline-primary activeButton" data-habit-id="">Mark habit as inactive</button>
             </span>
         </div>

@@ -83,10 +83,28 @@
                 </div>
             </div>
         </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="point-item d-flex align-items-center border rounded p-3 mb-3">
+                    <div class="flex-grow-1 ms-3">
+                        <h5 class="mb-1">Test Season</h5>
+                        <p class="mb-1 text-muted">{{ user.points }} points</p>
+                    </div>
+                    <div>
+                        <a href="{% url 'leaderboard' %}" class="btn btn-primary rounded-pill">To Leaderboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h2>Your Points History</h2>
+            <canvas id="pointsChart" width="400" height="200"></canvas>
+        </div>        
     </div>
 {% endblock %}
 
 {% block script %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="{% static 'habit_tracker/send_friend_request.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
