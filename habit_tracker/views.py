@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -11,7 +11,7 @@ import base64
 from django.core.files.base import ContentFile
 import json
 from .achievement import check_and_award_achievements
-from django.db.models import Q
+from django.db.models import Q, Count
 from datetime import date, timedelta, datetime
 
 from .models import CustomUser, Habit, LogEntry, Achievement, UserAchievement, Post, Comment, FriendRequest, ChatMessage, Notification, Challenge,UserChallenge, PointsHistory
@@ -515,7 +515,8 @@ def chat_page(request, friend_id):
         
     return render(request, "habit_tracker/chat_page.html", {
         "friend": friend,
-        "messages": messages
+        "messages": messages,
+        "user": request.user
     })
 
 def send_message(request):
@@ -746,4 +747,84 @@ def habit_completion_rate(request):
     return JsonResponse({
         "completed": completed_logs,
         "missed": missed_logs
+    })
+
+
+def details_page(request, habit_id):
+    # Retrieve the habit or show 404 if it doesn't exist
+    habit = get_object_or_404(Habit, id=habit_id)
+
+    # Ensure that the logged-in user owns the habit (if this is a multi-user app)
+    if habit.user != request.user:
+        return HttpResponseForbidden("You do not have access to this habit.")
+
+    # Fetch all log entries associated with the habit, ordered by timestamp (most recent first)
+    logs = LogEntry.objects.filter(habit=habit).order_by('-date')
+
+    days_elapsed = (date.today() - habit.start_date).days  # Days elapsed since start
+    total_duration = habit.duration  # Total duration of the habit in days
+
+    # Ensure days_elapsed doesn't exceed total_duration
+    days_elapsed = min(days_elapsed, total_duration)
+
+    # Calculate progress as a percentage
+    progress = (days_elapsed / total_duration) * 100 if total_duration > 0 else 0
+    progress = round(progress, 2)
+
+    # Count relapses by date
+    relapse_data = (
+        habit.logs.filter(status=False)
+        .values("date")
+        .annotate(relapse_count=Count("id"))
+        .order_by("date")
+    )
+
+    # Serialize the data into JSON for the chart
+    relapse_chart_data = json.dumps(
+        [
+            {"date": entry["date"].isoformat(), "relapse_count": entry["relapse_count"]}
+            for entry in relapse_data
+        ]
+    )
+
+    # Streak length data over time
+    streak_data = list(
+        habit.logs.order_by('date').values('date', 'habit__streak_length')
+    )
+
+    # Serialize the data into JSON for the chart
+    streak_chart_data = json.dumps(
+        [
+            {
+                "date": entry["date"].isoformat() if entry["date"] else None,
+                "streak_length": entry["habit__streak_length"] if entry["habit__streak_length"] is not None else 0,
+            }
+            for entry in streak_data
+        ]
+    )
+
+    # Mood tracking data: Extract moods with corresponding dates
+    mood_data = [
+        {
+            'date': log.date.isoformat(),  # Convert date to string format (YYYY-MM-DD)
+            'mood': log.mood
+        }
+        for log in logs
+    ]
+
+    # Paginate logs: Show 10 logs per page
+    paginator = Paginator(logs, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    # Render the template with paginated logs
+    return render(request, "habit_tracker/habit_details.html", {
+        "habit": habit,
+        "logs": page_obj,  # Pass the paginated logs object to the template
+        "success_count": logs.filter(status=True).count(),
+        "setback_count": logs.filter(status=False).count(),
+        "mood_chart_data": json.dumps(mood_data),
+        "progress": progress,
+        "streak_chart_data": streak_chart_data,
+        "relapse_chart_data": relapse_chart_data,
     })

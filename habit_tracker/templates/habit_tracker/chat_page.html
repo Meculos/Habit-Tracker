@@ -147,6 +147,7 @@
                 {% endfor %}
             </div>
             <div class="chat-input-container d-flex mt-3" style="gap: 10px;">
+                <input type="hidden" id="user-id" value="{{ user.id }}">
                 {% csrf_token %}
                 <textarea id="chat-input" class="form-control" placeholder="Type your message..." style="resize: none;"></textarea>
                 <button id="send-button" data-friend-id="{{ friend.id }}" class="btn btn-primary">Send</button>

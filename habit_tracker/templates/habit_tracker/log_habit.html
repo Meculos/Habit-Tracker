@@ -13,20 +13,25 @@
         <button class="btn btn-outline-primary" type="button" id="archive">Inactive Habits</button>
     </div>
     <template id="showHabitsTemplate">
-        <div class="card-body mt-4" id="allHabitsDiv">
-            <h5 class="card-title habitName"></h5>
-            <p class="card-text habitDescription"></p>
-            <p class="card-text endHabit"></p>
-            <div>
-                <small class="card-text habitFrequency"></small>
+        <div class="card habit-card mt-4" id="allHabitsDiv">
+            <div class="card-body">
+                <h5 class="card-title habitName"></h5>
+                <p class="card-text habitDescription"></p>
+                <p class="card-text endHabit text-success"></p>
+                <div>
+                    <small class="card-text habitFrequency text-secondary"></small>
+                </div>
+                <div class="button-group mt-3 d-flex justify-content-between align-items-center">
+                    <span>
+                        <button class="btn btn-primary logButton" data-habit-id="">Log Habit</button>
+                        <input type="hidden" name="csrfmiddlewaretoken" id="activeButtonCsrfToken" value="{{ csrf_token }}">
+                        <input type="hidden" name="csrfmiddlewaretoken" id="renewButtonCsrfToken" value="{{ csrf_token }}">
+                        <input type="hidden" name="csrfmiddlewaretoken" id="deleteButtonCsrfToken" value="{{ csrf_token }}">
+                        <button class="btn btn-warning activeButton" data-habit-id="">Mark as Inactive</button>
+                    </span>
+                    <a href="#" class="btn btn-info detailsButton" data-url="{% url 'details_page' 0 %}">Details</a>
+                </div>
             </div>
-            <span>
-                <button class="btn btn-outline-primary logButton" data-habit-id="">Log Habit</button>
-                <input type="hidden" name="csrfmiddlewaretoken" id="activeButtonCsrfToken" value="{{ csrf_token }}">
-                <input type="hidden" name="csrfmiddlewaretoken" id="renewButtonCsrfToken" value="{{ csrf_token }}">
-                <input type="hidden" name="csrfmiddlewaretoken" id="deleteButtonCsrfToken" value="{{ csrf_token }}">
-                <button class="btn btn-outline-primary activeButton" data-habit-id="">Mark habit as inactive</button>
-            </span>
         </div>
     </template>
     <template id="showAllLogsTemplate">
@@ -39,15 +44,17 @@
         </div>
     </template>
     <template id="archivedHabitsTemplate">
-        <div class="card-body mt-4" id="archivedHabitsDiv">
-            <h5 class="card-title archivedHabitName"></h5>
-            <p class="card-text archivedHabitDescription"></p>
-            <p class="card-text archivedEndHabit"></p>
-            <div>
-                <small class="card-text archivedHabitFrequency"></small>
+        <div class="card archive-card mt-4" id="archivedHabitsDiv">
+            <div class="card-body">
+                <h5 class="card-title archivedHabitName"></h5>
+                <p class="card-text archivedHabitDescription"></p>
+                <p class="card-text archivedEndHabit"></p>
+                <div>
+                    <small class="card-text archivedHabitFrequency text-secondary"></small>
+                </div>
+                <input type="hidden" name="csrfmiddlewaretoken" id="inactiveButtonCsrfToken" value="{{ csrf_token }}">
+                <button class="btn btn-success inactiveButton" data-habit-id="">Mark habit as active</button>
             </div>
-            <input type="hidden" name="csrfmiddlewaretoken" id="inactiveButtonCsrfToken" value="{{ csrf_token }}">
-            <button class="btn btn-outline-primary inactiveButton" data-habit-id="">Mark habit as active</button>
         </div>
     </template>
     <div id="createHabit" class="mt-4">
