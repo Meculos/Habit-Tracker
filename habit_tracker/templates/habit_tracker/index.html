@@ -6,19 +6,101 @@
 {% endblock %}
 
 {% block main %}
-    <div data-bs-spy="scroll" style="background-color: black !important;" data-bs-target="homepagenav" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
-        <div class="row" id="navitem1" style="background-color: black;">
-            <div class="col" style="background-color: black;" id="column2">
-                <img src="{% static 'habit_tracker/images/homepageimg4.webp' %}" class="img-fluid" alt="homepage image">
+    <div data-bs-spy="scroll" style="background-color: transparent !important;" data-bs-target="homepagenav" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+        <div id="navitem1" class="position-relative homediv1">
+            <video autoplay muted loop id="hero-video" class="d-none d-md-block w-100">
+                <source src="{% static 'habit_tracker/video/Habit Tracker Platform.mp4' %}" type="video/mp4">
+                <img src="{% static 'habit_tracker/images/Habit Tracker Platform.png' %}" alt="Fallback Image">
+            </video>
+            <div class="d-flex d-md-none animate__animated animate__slideInLeft">
+                <img 
+                    src="{% static 'habit_tracker/images/Habit Tracker Platform.png' %}" 
+                    alt="Fallback Image" 
+                    class="fallback-img w-100">
             </div>
-            <div class="col" style="background-color: black;" id="column1">
-                <h1 id="text1">Habit Tracker</h1>
-                <p id="text2">Track Those Pesky Habits And Stop Making Excuses About Them Today</p>
-                <a id="button1" href="{% url 'register' %}" class="btn btn-outline-primary">Get Started</a>
+            <div class="container d-none d-md-block animate__animated animate__fadeInUp" style="padding-top: 800px;">
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card shadow-lg homecard1 mx-auto" style="max-width: 800px;">
+                            <div class="card-body text-center">
+                                <h5 class="card-title hometext1">
+                                    Create And Track Habits
+                                </h5>
+                                <p class="card-text">
+                                    Create, track, and log habits. From maintaining consistency to breaking bad habits, 
+                                    start your journey to a healthy lifestyle with us.
+                                </p>
+                                <a class="btn btn-outline-primary rounded-pill homebtn1" href="{% url 'register' %}">Get Started</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container d-md-none animate__animated animate__fadeInUp">
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card shadow-lg homecard1 mx-auto" style="max-width: 800px;">
+                            <div class="card-body text-center">
+                                <h5 class="card-title hometext1">
+                                    Create And Track Habits
+                                </h5>
+                                <p class="card-text">
+                                    Create, track, and log habits. From maintaining consistency to breaking bad habits, 
+                                    start your journey to a healthy lifestyle with us.
+                                </p>
+                                <a class="btn btn-outline-primary rounded-pill homebtn1" href="{% url 'register' %}">Get Started</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div>
-            
+        
+        <div class="row" id="navitem2">
+            <div class="d-flex justify-content-center mb-4 animate__animated animate__fadeInDown" style="margin-top: 50px;">
+                <h5>OUR SERVICES</h5>
+            </div>
+        
+            <div class="col-md-6 col-sm-12 mb-3 homesec text-center animate__animated animate__zoomInLeft">
+                <img 
+                    src="{% static 'habit_tracker/images/habit.png' %}" 
+                    alt="Track your habits" 
+                    class="img-fluid rounded">
+                <h6 class="mt-3">Track Your Habits</h6>
+                <p>Stay on top of your habits by tracking progress, maintaining streaks, and analyzing relapses to form better routines.</p>
+                <a href="{% url 'register' %}" class="btn btn-primary rounded-pill">Get Started</a>
+            </div>
+        
+            <div class="col-md-6 col-sm-12 mb-3 homesec text-center animate__animated animate__zoomInRight">
+                <img 
+                    src="{% static 'habit_tracker/images/habit (1).png' %}" 
+                    alt="Add and chat with friends" 
+                    class="img-fluid rounded">
+                <h6 class="mt-3">Add and Chat with Friends</h6>
+                <p>Connect with like-minded individuals, share your progress, and support each other in building better habits.</p>
+                <a href="{% url 'register' %}" class="btn btn-primary rounded-pill">Get Started</a>
+            </div>
+        
+            <div class="col-md-6 col-sm-12 mb-3 homesec text-center animate__animated animate__zoomInRight">
+                <img 
+                    src="{% static 'habit_tracker/images/habit (2).png' %}" 
+                    alt="Compete in quizzes and earn points" 
+                    class="img-fluid rounded">
+                <h6 class="mt-3">Compete in Quizzes and Earn Points</h6>
+                <p>Participate in challenges, earn points, and climb the leaderboard to unlock exciting rewards and achievements.</p>
+                <a href="{% url 'register' %}" class="btn btn-primary rounded-pill">Get Started</a>
+            </div>
+        
+            <div class="col-md-6 col-sm-12 mb-3 homesec text-center animate__animated animate__zoomInLeft">
+                <img 
+                    src="{% static 'habit_tracker/images/habit (3).png' %}" 
+                    alt="Join the community" 
+                    class="img-fluid rounded">
+                <h6 class="mt-3">Join the Community</h6>
+                <p>Become part of a vibrant community focused on self-improvement, sharing insights, and achieving personal growth.</p>
+                <a href="{% url 'register' %}" class="btn btn-primary rounded-pill">Get Started</a>
+            </div>
         </div>
+        
     </div>
 {% endblock %}

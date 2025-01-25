@@ -400,4 +400,75 @@ canvas {
     height: auto;
 }
 
+#hero-video {
+    object-fit: contain;
+    position: absolute;
+    width: 100%;
+    height: 80%;
+    z-index: -1;  /* Makes sure the content is above the video */
+    border-radius: 30px;
+}
+
+.homesec img {
+    max-height: 400px;
+    object-fit: contain;
+}
+
+.homesec h6 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+.homesec p {
+    font-size: 0.95rem;
+    color: #6c757d;
+    margin: 0.5rem 0 1rem;
+}
+
+.homesec .btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1.5rem;
+    background-color: #0d6efd;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.homesec .btn:hover {
+    background-color: #0056b3;
+}
+
+
+#navitem1 {
+    position: relative;
+    height: fit-content;  /* Adjust this value based on your design */
+}
+
+.fallback-img {
+    object-fit: contain; /* Ensures the full image is shown within the available width */
+    width: 100%; /* Makes the image span the full width of the screen */
+    height: auto; /* Maintains aspect ratio of the image */
+    border-radius: 30px;
+}
+
+.homecard1 {
+    border: 1px solid purple;
+    border-radius: 10px;
+}
+.hometext1 {
+    color: purple;
+}
+.homebtn1 {
+    background-color: transparent;
+    border-color: purple;
+    color: purple;
+}
+.homebtn1:hover {
+    background-color: purple;
+    color: white;
+}
+
+
+
+
 
