@@ -16,27 +16,27 @@
         <header>
             {% block nav %}
                 <nav id="homepagenav" class="navbar bg-body-tertiary px-3 mt-4">               
-                    <a class="navbar-brand" href="#">Habit Tracker</a>
+                    <a class="navbar-brand" style="color: white;" href="#">Habit Tracker</a>
                     <ul class="nav nav-pills">
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'index' %}#navitem1">Home</a>
+                            <a class="nav-link" style="color: white;" href="{% url 'index' %}#navitem1">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'index' %}#navitem2">Services</a>
+                            <a class="nav-link" style="color: white;" href="{% url 'index' %}#navitem2">Services</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'index' %}#navitem3">About Us</a>
+                            <a class="nav-link" style="color: white;" href="{% url 'index' %}#navitem3">About Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                            <a class="nav-link" style="color: white;" href="{% url 'dashboard' %}">Dashboard</a>
                         </li>
                         {% if not user.is_authenticated %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                                <a class="nav-link" style="color: white;" href="{% url 'login' %}">Login</a>
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                                <a class="nav-link" style="color: white;" href="{% url 'logout' %}">Logout</a>
                             </li>
                         {% endif %}
                     </ul>

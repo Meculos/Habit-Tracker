@@ -1,5 +1,5 @@
 body {
-    background-color: #bec5ad !important;
+    background: linear-gradient(to bottom, rgba(245, 245, 245, 0.8), #ffffff); /* Transparent light grey */
 }
 
 #homepagenav {
