@@ -70,12 +70,14 @@ body {
 .logButton, 
 .activeButton, 
 .detailsButton,
-.inactiveButton {
+.inactiveButton,
+.deleteButton,
+.renewButton {
     font-size: 0.85rem;
     padding: 0.4rem 0.8rem;
 }
 
-.logButton {
+.logButton, .renewButton {
     color: #fff;
     background-color: #007bff;
     border-color: #007bff;
@@ -85,8 +87,12 @@ body {
     background-color: #0056b3;
     border-color: #004085;
 }
+.renewButton:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
 
-.activeButton {
+.activeButton, .deleteButton {
     color: #212529;
     background-color: #ffc107;
     border-color: #ffc107;
@@ -95,6 +101,10 @@ body {
 .activeButton:hover {
     background-color: #e0a800;
     border-color: #d39e00;
+}
+.deleteButton:hover {
+    background-color: red;
+    border-color: rgb(82, 19, 19);
 }
 
 .detailsButton {
@@ -237,6 +247,7 @@ body {
 #commnav, #smallcommnav, #postsDiv, #friendnav, #smallfriendnav {
     border-right: 2px solid #221d23;
     margin-top: 0;
+    min-height: 100vh;
 }
 
 #commheader {
@@ -256,10 +267,20 @@ body {
     font-style: italic;
 }
 .commentbutton:hover {
-    border: 2px solid gray;
-    color: white;
+    background-color: #221d23;
+    color: #bec5ad;
     font-style: italic;
-    background-color: transparent;
+    border: none;
+}
+
+.commName {
+    color: #221d23;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-decoration: none;
+}
+.commName:hover {
+    color: black;
+    text-decoration: dashed;
 }
 
 #notificationsDropdown {
@@ -468,7 +489,96 @@ canvas {
     color: white;
 }
 
+#search {
+    width: 500px;
+    margin-right: 20px;
+}
 
+.gold-bg {
+    background-color: #ffd700;
+}
 
+.silver-bg {
+    background-color: #c0c0c0;
+}
+
+.bronze-bg {
+    background-color: #cd7f32;
+}
+
+.white-bg {
+    background-color: #ffffff;
+}
+
+.edit {
+    background-color: transparent;
+    border-color: white !important;
+    color: white !important;
+}
+
+.edit:hover {
+    background-color: white !important;
+    color: #221d23 !important;
+}
+
+.leader {
+    background-color: transparent;
+    border-color: #221d23 !important;
+    color: #221d23 !important;
+}
+
+.leader:hover {
+    background-color: #221d23 !important;
+    color: white !important;
+}
+
+.nav-item a {
+    color: #221d23;
+}
+.nav-item a:hover {
+    color: #bec5ad;
+}
+
+.chatname {
+    color: #221d23;
+    text-decoration: none;
+    font-style: italic;
+}
+.chatname:hover {
+    color: #423e42;
+}
+
+.searchbtn {
+    background-color: transparent;
+    border-color: #221d23;
+    color: #221d23;
+}
+.searchbtn:hover {
+    background-color: #221d23;
+    color: #bec5ad;
+    border-color: #221d23;
+}
+
+.chatbtn {
+    background-color: transparent;
+    border-color: #221d23;
+    color: #221d23;
+}
+.chatbtn:hover {
+    background-color: #221d23;
+    color: #bec5ad;
+    border-color: #221d23;
+}
+
+.profilebtn {
+    background-color: transparent;
+    border-color: white;
+    color: white;
+}
+.profilebtn:hover {
+    background-color: white;
+    color: #221d23;
+    border-color: white;
+}
 
 

@@ -55,7 +55,7 @@
                         <h5>{{ user.username|capfirst }}</h5>
                         <p>{{ user.user_bio|capfirst }}</p>
                         {% if user.is_authenticated %}
-                            <a href="{% url 'profile' user.id %}">To Profile</a>
+                            <a class="btn btn-outline-info rounded-pill profilebtn" href="{% url 'profile' user.id %}">To Profile</a>
                         {% else %}
                             <a href="{% url 'login' %}">Login</a>
                         {% endif %}

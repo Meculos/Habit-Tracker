@@ -44,4 +44,5 @@ urlpatterns = [
     path("take_challenge/<int:challenge_id>/", views.take_challenge, name="challenge_page"),
     path("leaderboard/", views.leaderboard, name="leaderboard"),
     path("habit_details/<int:habit_id>/", views.details_page, name="details_page"),
+    path("search/", views.search, name="search"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

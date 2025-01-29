@@ -248,6 +248,7 @@ function logHabit(event) {
 function submitLogHabit() {
     const csrfToken = document.querySelector('#logHabitCsrfToken').value;
     const logStatus = document.querySelector('input[name="logStatus"]:checked')?.value;
+    console.log('logging status: ', logStatus)
     const logNote = document.querySelector('#log_notes').value;
     const logMood = document.querySelector('input[name="logMood"]:checked')?.value;
     const habitId = document.querySelector('#habitLogForm').dataset.habitId;

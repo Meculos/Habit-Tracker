@@ -125,7 +125,7 @@
                                         <!-- Post content -->
                                         <div>
                                             <h5 class="mb-0">
-                                                <a href="{% url 'profile' post.user.id %}">{{ post.user.username|capfirst }}</a>
+                                                <a class="chatname" href="{% url 'profile' post.user.id %}">{{ post.user.username|capfirst }}</a>
                                             </h5>
                                             <small class="text-muted">Posted on {{ post.posted_on }}</small>
                                             <p class="mt-2">
@@ -166,7 +166,7 @@
                                         <!-- Post content -->
                                         <div>
                                             <h5 class="mb-0">
-                                                <a href="{% url 'profile' post.user.id %}">{{ post.user.username|capfirst }}</a>
+                                                <a class="chatname" href="{% url 'profile' post.user.id %}">{{ post.user.username|capfirst }}</a>
                                             </h5>
                                             <small class="text-muted">Posted on {{ post.posted_on }}</small>
                                             <p class="mt-2">

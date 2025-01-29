@@ -21,12 +21,12 @@
                 </div>
                 {% if user.id == main.id %}
                     <div class="text-center mt-4">
-                        <a href="{% url 'edit_profile' %}">
+                        <a href="{% url 'edit_profile' %}" class="btn btn-outline-white rounded-pill edit">
                             <i class="fas fa-pencil-alt"></i> Edit Profile
                         </a>
                     </div>
-                    <div class="text-center mt-1">
-                        <a href="{% url 'edit_profile_picture' %}">
+                    <div class="text-center mt-3">
+                        <a href="{% url 'edit_profile_picture' %}" class="btn btn-outline rounded-pill edit">
                             <i class="fas fa-camera-retro"></i> Edit Profile Picture
                         </a>
                     </div>
@@ -91,7 +91,7 @@
                         <p class="mb-1 text-muted">{{ user.points }} points</p>
                     </div>
                     <div>
-                        <a href="{% url 'leaderboard' %}" class="btn btn-primary rounded-pill">To Leaderboard</a>
+                        <a href="{% url 'leaderboard' %}" class="btn btn-outline rounded-pill leader">To Leaderboard</a>
                     </div>
                 </div>
             </div>

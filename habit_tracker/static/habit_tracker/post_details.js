@@ -83,7 +83,7 @@ function loadComments() {
                 if (largeDiv && largeDiv.offsetParent !== null) {
                     const commentElement = largeTemplate.content.cloneNode(true);
                     const profileURL = `/habit_tracker/profile/${comment.id}/`;
-                    commentElement.querySelector('.commentName').innerHTML = `<a href="${profileURL}">${comment.username.charAt(0).toUpperCase() + comment.username.slice(1)}</a>`
+                    commentElement.querySelector('.commentName').innerHTML = `<a class="chatname" href="${profileURL}">${comment.username.charAt(0).toUpperCase() + comment.username.slice(1)}</a>`
                     commentElement.querySelector('.commentDate').textContent = comment.date;
                     commentElement.querySelector('.commentPost').textContent = comment.comment;
                     commentElement.querySelector('img').src = comment.picture;
@@ -94,7 +94,7 @@ function loadComments() {
                 if (smallDiv && smallDiv.offsetParent !== null) {
                     const commentElement = smallTemplate.content.cloneNode(true);
                     const profileURL = `/habit_tracker/profile/${comment.id}/`;
-                    commentElement.querySelector('.commentName').innerHTML = `<a href="${profileURL}">${comment.username.charAt(0).toUpperCase() + comment.username.slice(1)}</a>`
+                    commentElement.querySelector('.commentName').innerHTML = `<a class="chatname" href="${profileURL}">${comment.username.charAt(0).toUpperCase() + comment.username.slice(1)}</a>`
                     commentElement.querySelector('.commentDate').textContent = comment.date;
                     commentElement.querySelector('.commentPost').textContent = comment.comment;
                     commentElement.querySelector('img').src = comment.picture;

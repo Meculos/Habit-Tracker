@@ -143,10 +143,26 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-5">
-                <h2>Habit Success Rate</h2>
-                <canvas id="completionRateChart" width="400" height="200"></canvas>
-            </div>            
+            <div class="row mt-5">
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <h2 class="text-center">Habit Success Rate</h2>
+                    <canvas id="completionRateChart" width="400" height="200"></canvas>
+                </div>
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <h2 class="text-center">Relapse data</h2>
+                    <canvas id="relapseBarChart" width="100%" height="90"
+                        data-relapse-chart="{{ relapse_chart_data }}">
+                    </canvas>
+                </div>
+            </div>  
+            <div class="row mt-4">
+                <div class="col-12">
+                    <h2 class="text-center">Mood Data</h2>
+                    <canvas id="combinedMoodChart" width="100%" height="50" 
+                        data-combined-mood-chart="{{ combined_mood_chart_data }}">
+                    </canvas>
+                </div>
+            </div>                 
         </div>
         <div class="col-12 col-md-3 d-none d-md-block sidebar mt-3 custom-sidebar">
             <div class="dropdown mb-3 d-none d-md-block">
@@ -190,7 +206,7 @@
                 <h5 class="d-inline-block text-truncate">{{ user.username|capfirst }}</h5>
                 <p>{{ user.user_bio|capfirst }}</p>
                 {% if user.is_authenticated %}
-                    <a href="{% url 'profile' user.id %}">To Profile</a>
+                    <a class="btn btn-outline-info rounded-pill profilebtn" href="{% url 'profile' user.id %}">To Profile</a>
                 {% else %}
                     <a href="{% url 'login' %}">Login</a>
                 {% endif %}

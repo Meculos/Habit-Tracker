@@ -6,54 +6,67 @@
 {% endblock %}
 
 {% block main %}
-    {% if users %}
-        <div class="row">
+    {% if page_obj %}
+        <div class="container py-4" style="background-color: #221d23; border-radius: 10px;">
+            <h3 class="text-center mb-4" style="font-weight: bold; color: white;">Leaderboard</h3>
             {% for user in users %}
-                <div class="d-flex align-items-center border rounded p-2 mb-3" style="background-color: #bec5ad; margin: 20px;">
+                <div class="
+                    d-flex align-items-center p-3 rounded shadow-sm mb-3
+                    {% if forloop.counter == 1 %} gold-bg 
+                    {% elif forloop.counter == 2 %} silver-bg
+                    {% elif forloop.counter == 3 %} bronze-bg 
+                    {% else %} white-bg 
+                    {% endif %}
+                        ">
                     <div class="flex-shrink-0">
                         <img src="{{ user.profile_picture.url }}" 
                             alt="Profile Picture" 
-                            class="rounded-circle" 
-                            style="height: 75px; width: 75px; object-fit: cover; border: 2px solid #ddd;">
+                            class="rounded-circle border border-light"
+                            style="height: 75px; width: 75px; object-fit: cover;">
                     </div>
                     <div class="flex-grow-1 ms-3">
-                        <a href="{% url 'profile' user.id %}">
-                            <h5 class="mb-1">
+                        <a href="{% url 'profile' user.id %}" style="text-decoration: underline; font-style: italic;
+                        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ; color: black;">
+                            <h5 class="mb-0">
                                 {{ user.username|capfirst }}
                             </h5>
                         </a>
+                        <small style="color: #555;">{{ user.points }} points</small>
                     </div>
+                    {% if forloop.counter <= 3 %}
                     <div>
-                        {{ user.points }} points
+                        <span class="badge fs-6" style="background-color: transparent; font-weight: bold;">
+                            🏆 Place {{ forloop.counter }}
+                        </span>
                     </div>
-                </div>               
+                    {% endif %}
+                </div>
             {% endfor %}
+            {% if page_obj.has_other_pages %}
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
         </div>
     {% else %}
         <div class="d-flex text-center">
             <p>Leaderboard is empty. Go complete a challenge to climb the ranks.</p>
         </div>
     {% endif %}
-    {% if page_obj.has_other_pages %}
-        <nav>
-            <ul class="pagination justify-content-center">
-                {% if page_obj.has_previous %}
-                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
-                {% endif %}
-
-                {% for num in page_obj.paginator.page_range %}
-                    {% if page_obj.number == num %}
-                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
-                    {% else %}
-                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-                    {% endif %}
-                {% endfor %}
-
-                {% if page_obj.has_next %}
-                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-    {% endif %}
-
 {% endblock %}

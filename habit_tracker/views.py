@@ -5,16 +5,21 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.utils import timezone
 from random import sample
 from django.core.paginator import Paginator
 import base64
 from django.core.files.base import ContentFile
 import json
 from .achievement import check_and_award_achievements
-from django.db.models import Q, Count
+from collections import Counter
+from django.db.models import Q, Count, Avg
 from datetime import date, timedelta, datetime
+import logging
 
-from .models import CustomUser, Habit, LogEntry, Achievement, UserAchievement, Post, Comment, FriendRequest, ChatMessage, Notification, Challenge,UserChallenge, PointsHistory
+from .models import CustomUser, Habit, Relapse, LogEntry, Achievement, UserAchievement, Post, Comment, FriendRequest, ChatMessage, Notification, Challenge,UserChallenge, PointsHistory
+
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 def index(request):
@@ -57,10 +62,14 @@ def dashboard(request):
     user_achievements = UserAchievement.objects.filter(user=request.user).select_related('achievement')[:5]
     notification = Notification.objects.filter(user=request.user, is_read=False)
     user = CustomUser.objects.get(username=request.user.username)
+    relapse_chart_data = get_all_habit_relapse_chart_data(request.user)
+    mood_chart_data = get_combined_mood_chart_data(request.user)
     return render(request, "habit_tracker/dashboard.html", {
         "user_achievements": user_achievements,
         "user": user,
-        "notifications": notification
+        "notifications": notification,
+        "relapse_chart_data": relapse_chart_data,
+        "combined_mood_chart_data": mood_chart_data
     })
 
 def register(request):
@@ -168,7 +177,7 @@ def log_habit(request):
         try:
             data = json.loads(request.body)
             habit_id = data.get("habit_id")
-            log_status = data.get("log_status")
+            log_status = data.get("log_status") == "True"
             log_note = data.get("log_note")
             log_mood = data.get("log_mood")
 
@@ -182,9 +191,11 @@ def log_habit(request):
                 mood = log_mood
             )
             if log_status:
-                habit.streak_length += 1
+                habit.mark_completed()
             else:
-                habit.streak_length = 0
+                Relapse.objects.create(habit=habit)  # No need to manually pass the date
+                habit.total_relapses += 1
+                habit.save()
 
             habit.save()
 
@@ -192,6 +203,7 @@ def log_habit(request):
 
             return JsonResponse({"message": "Habit logged successfully"})
         except Exception as e:
+            logger.error(f"Error logging habit: {e}")
             return JsonResponse({"Message": f"Error {str(e)}"}, status=400)
         
 def inactive_habit(request):
@@ -566,8 +578,7 @@ def friends_post(request):
     user = get_object_or_404(CustomUser, id=request.user.id)
     friends = user.friends.all()
     
-    for friend in friends:
-        posts = Post.objects.filter(user=friend)
+    posts = Post.objects.filter(user__in=friends).order_by("-posted_on")
     
     return render(request, "habit_tracker/friends_posts.html", {
         "posts": posts
@@ -771,21 +782,7 @@ def details_page(request, habit_id):
     progress = (days_elapsed / total_duration) * 100 if total_duration > 0 else 0
     progress = round(progress, 2)
 
-    # Count relapses by date
-    relapse_data = (
-        habit.logs.filter(status=False)
-        .values("date")
-        .annotate(relapse_count=Count("id"))
-        .order_by("date")
-    )
-
-    # Serialize the data into JSON for the chart
-    relapse_chart_data = json.dumps(
-        [
-            {"date": entry["date"].isoformat(), "relapse_count": entry["relapse_count"]}
-            for entry in relapse_data
-        ]
-    )
+    relapse_chart_data = get_relapse_chart_data(habit)
 
     # Streak length data over time
     streak_data = list(
@@ -828,3 +825,83 @@ def details_page(request, habit_id):
         "streak_chart_data": streak_chart_data,
         "relapse_chart_data": relapse_chart_data,
     })
+
+def search(request):
+    query = request.GET.get("search")
+    users = CustomUser.objects.filter(username__icontains=query).exclude(id=request.user.id)
+    main_user = get_object_or_404(CustomUser, id=request.user.id)
+    friends = main_user.friends.all()
+    for user in users:
+        if user in friends:
+            user.already_friends = True
+
+    return render(request, "habit_tracker/search.html", {
+        "users": users
+    })
+
+def get_relapse_chart_data(habit):
+    # Query relapses related to the habit and group by date
+    relapses_by_date = (
+        habit.relapses.values("date")  # Get only the 'date' field from related Relapse objects
+        .annotate(relapse_count=Count("id"))  # Count relapses on each date
+        .order_by("date")  # Order by date for chronological data
+    )
+
+    # Prepare data in the format needed for the chart
+    relapse_chart_data = json.dumps(
+        [
+            {"date": str(entry["date"]), "relapse_count": entry["relapse_count"]}
+            for entry in relapses_by_date
+        ]
+    )
+    return relapse_chart_data
+
+def get_all_habit_relapse_chart_data(user):
+    # Query all habits for the user
+    habits = Habit.objects.filter(user=user)
+    
+    # Create a dictionary to store relapses for each habit
+    all_habit_data = {}
+    
+    for habit in habits:
+        # Query relapses related to the habit and group by date
+        relapses_by_date = (
+            habit.relapses.values("date")  # Get only the 'date' field from related Relapse objects
+            .annotate(relapse_count=Count("id"))  # Count relapses on each date
+            .order_by("date")  # Order by date for chronological data
+        )
+
+        # Store the chart data for the habit
+        all_habit_data[habit.name] = [
+            {"date": str(entry["date"]), "relapse_count": entry["relapse_count"]}
+            for entry in relapses_by_date
+        ]
+    
+    # Convert the data dictionary to JSON for use in the front-end
+    return json.dumps(all_habit_data)
+
+def get_combined_mood_chart_data(user):
+    """
+    Returns combined mood data for all habits of the given user, suitable for a single chart.
+    """
+    habits = Habit.objects.filter(user=user)
+    combined_mood_data = []
+
+    for habit in habits:
+        mood_data = (
+            habit.logs.values("date")
+            .annotate(average_mood=Avg("mood"))  # Average mood per day
+            .filter(average_mood__isnull=False)  # Exclude entries with null mood
+            .order_by("date")
+        )
+
+        combined_mood_data.append({
+            "habit": habit.name,
+            "mood_data": [
+                {"date": str(entry["date"]), "average_mood": round(entry["average_mood"], 1)}
+                for entry in mood_data
+            ],
+        })
+
+    return json.dumps(combined_mood_data)
+

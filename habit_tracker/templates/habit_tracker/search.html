@@ -1,0 +1,41 @@
+{% extends "habit_tracker/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Search - Habit Tracker
+{% endblock %}
+
+{% block main %}
+    <div>
+        {% if users %}
+            <div class="row">
+                {% for user in users %}
+                    <div class="d-flex align-items-center border rounded p-2 mb-3" style="background-color: #bec5ad; margin: 20px;">
+                        <div class="flex-shrink-0">
+                            <img src="{{ user.profile_picture.url }}" 
+                                alt="Profile Picture" 
+                                class="rounded-circle" 
+                                style="height: 75px; width: 75px; object-fit: cover; border: 2px solid #ddd;">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-1">
+                                {{ user.username|capfirst}}
+                            </h5>
+                        </div>
+                        <div>
+                            {% if user.already_friends %}
+                                <a href="{% url 'chat' user.id %}" class="btn btn-secondary btn-sm">To Chat</a>
+                            {% else %}
+                                <a href="{% url 'profile' user.id %}" class="btn btn-secondary btn-sm">To Profile</a>
+                            {% endif %}
+                        </div>
+                    </div>                    
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="d-flex justify-content-center">
+                <p>No user matching "{{ request.GET.search }}".</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
         const messageContent = document.createElement('div');
         messageContent.classList.add('message-content', 'p-3', 'rounded');
-        messageContent.style.backgroundColor = isOutgoing ? 'lightblue' : '#f1f1f1';
+        messageContent.style.backgroundColor = isOutgoing ? 'gray' : '#f1f1f1';
     
         const messageText = document.createElement('p');
         messageText.classList.add('mb-1');

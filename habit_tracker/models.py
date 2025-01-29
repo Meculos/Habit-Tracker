@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxLengthValidator
 from datetime import timedelta, datetime
@@ -66,7 +66,8 @@ class Habit(models.Model):
     total_relapses = models.IntegerField(default=0)  # Count of total relapses
     relapse_dates = models.JSONField(default=list, blank=True)  # List of dates of relapses
     streak_length = models.PositiveIntegerField(default=0)  # Field to track streak length
-    last_completed = models.DateField(null=True, blank=True)  # Field to track last completed date
+    last_completed = models.DateField(null=True, blank=True)  
+    latest_completed = models.DateField(null=True, blank=True) # Field to track last completed date
     
     class Duration(models.IntegerChoices):
         ONE_WEEK = 7, "One week"
@@ -93,23 +94,32 @@ class Habit(models.Model):
             return days_left
         return None
 
-    def add_relapse(self, date):
+    @transaction.atomic
+    def add_relapse(self, relapse_date):
         """Increment relapse count and add the date of relapse."""
-        self.total_relapses += 1
-        self.relapse_dates.append(str(date))
-        self.save()
+        # Ensure the existing relapse dates are fetched and modified
+        if not isinstance(self.relapse_dates, list):  # If empty, fallback to list
+            self.relapse_dates = []
+        updated_relapse_dates = self.relapse_dates + [str(relapse_date)]
+
+        # Update the model fields
+        self.relapse_dates = updated_relapse_dates
+        self.total_relapses = len(updated_relapse_dates)
+
+        self.save()  # Save changes
+
 
     def mark_completed(self):
         today = timezone.now().date()
-        if self.last_completed:
+        if self.latest_completed:
             # Check if the completion is consecutive (no break in the streak)
-            if self.last_completed == today - timedelta(days=1):
+            if self.latest_completed == today - timedelta(days=1):
                 self.streak_length += 1  # Increment streak if completed the previous day
             else:
                 self.streak_length = 1  # Reset streak if there was a break
         else:
             self.streak_length = 1  # Start a new streak if this is the first time
-        self.last_completed = today  # Update the completion date
+        self.latest_completed = today  # Update the completion date
         self.save()
 
     class Meta:
@@ -276,3 +286,11 @@ class PointsHistory(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.points} points on {self.timestamp}"
+    
+class Relapse(models.Model):
+    habit = models.ForeignKey(Habit, on_delete=models.CASCADE, related_name="relapses")
+    date = models.DateField(auto_now_add=True)  # Automatically set the date to the current date
+
+    def __str__(self):
+        return f"Relapse for {self.habit.name} on {self.date}"
+

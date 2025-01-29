@@ -125,7 +125,7 @@
         <div class="card shadow border-0" style="background-color: #bec5ad">
             <div class="card-body">
                 <h5 class="card-title">
-                    <a href="{% url 'profile' post.user.id %}">{{ post.user.username|capfirst }}</a>
+                    <a class="chatname" href="{% url 'profile' post.user.id %}">{{ post.user.username|capfirst }}</a>
                 </h5>
                 <small class="text-muted">Posted on {{ post.posted_on }}</small>
                 <hr>
@@ -137,7 +137,7 @@
                 <textarea class="form-control" autocomplete="off" rows="5" id="commentArea" placeholder="Join the discussion..."></textarea>
                 <input type="hidden" name="csrfmiddlewaretoken" id="commentCsrfToken" value="{{ csrf_token }}">
                 <div class="mt-2 d-flex justify-content-center">
-                    <button class="btn btn-outline-info" type="submit">Comment</button>
+                    <button class="btn btn-outline-info chatbtn" type="submit">Comment</button>
                 </div>
             </form>
         </div>
@@ -152,7 +152,7 @@
         <div class="card shadow border-0" style="background-color: #bec5ad">
             <div class="card-body">
                 <h5 class="card-title">
-                    <a href="{% url 'profile' post.user.id %}">{{ post.user.username|capfirst }}</a>
+                    <a class="chatname" href="{% url 'profile' post.user.id %}">{{ post.user.username|capfirst }}</a>
                 </h5>
                 <small class="text-muted">Posted on {{ post.posted_on }}</small>
                 <hr>
@@ -164,7 +164,7 @@
                 <textarea class="form-control" autocomplete="off" rows="5" id="smallArea" placeholder="Join the discussion..."></textarea>
                 <input type="hidden" name="csrfmiddlewaretoken" id="smallCsrfToken" value="{{ csrf_token }}">
                 <div class="mt-2 d-flex justify-content-center">
-                    <button class="btn btn-outline-info" type="submit">Comment</button>
+                    <button class="btn btn-outline-info chatbtn" type="submit">Comment</button>
                 </div>
             </form>
         </div>
