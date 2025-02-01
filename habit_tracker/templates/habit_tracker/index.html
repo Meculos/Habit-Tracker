@@ -6,122 +6,104 @@
 {% endblock %}
 
 {% block main %}
-    <div data-bs-spy="scroll" style="background-color: transparent !important;" data-bs-target="homepagenav" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
-        <div id="navitem1" class="position-relative homediv1">
-            <video autoplay muted loop id="hero-video" class="d-none d-md-block w-100">
-                <source src="{% static 'habit_tracker/video/Habit Tracker Platform.mp4' %}" type="video/mp4">
-                <img src="{% static 'habit_tracker/images/Habit Tracker Platform.png' %}" alt="Fallback Image">
-            </video>
-            <div class="d-flex d-md-none animate__animated animate__slideInLeft">
-                <img 
-                    src="{% static 'habit_tracker/images/Habit Tracker Platform.png' %}" 
-                    alt="Fallback Image" 
-                    class="fallback-img w-100">
-            </div>
-            <div class="container d-none d-md-block animate__animated animate__fadeInUp" style="padding-top: 800px;">
-                <div class="row mt-4">
-                    <div class="col-12">
-                        <div class="card shadow-lg homecard1 mx-auto" style="max-width: 800px;">
-                            <div class="card-body text-center">
-                                <h5 class="card-title hometext1">
-                                    Create And Track Habits
-                                </h5>
-                                <p class="card-text">
-                                    Create, track, and log habits. From maintaining consistency to breaking bad habits, 
-                                    start your journey to a healthy lifestyle with us.
-                                </p>
-                                <a class="btn btn-outline-primary rounded-pill homebtn1" href="{% url 'register' %}">Get Started</a>
+    <div data-bs-spy="scroll" style="background-color: white !important;" data-bs-target="homepagenav" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2 mt-4" tabindex="0">
+        <div class="hero">
+           <div class="container">
+                <div class="row homerow1">
+                    <div class="col-md-6">
+                        <div class="copy" data-aos="fade-up">
+                            <div class="text-label">
+                                Take Back Control Of Your Life Now
+                            </div>
+                            <div class="text-hero-bold">
+                                HABIT TRACKER
+                            </div>
+                            <div class="text-hero-regular">
+                                Create Track And Form Healthy Habits Today
+                            </div>
+                            <div class="cta mt-3">
+                                <a href="{% url 'register' %}" class="btn btn-primary registerBtn">Get Started</a>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6" data-aos="fade-left">
+                        <img src="{% static 'habit_tracker/images/Healthy habit-bro.png' %}" alt="homepageimg" id="hpimg1">
+                    </div>
                 </div>
             </div>
-            <div class="container d-md-none animate__animated animate__fadeInUp">
-                <div class="row mt-4">
-                    <div class="col-12">
-                        <div class="card shadow-lg homecard1 mx-auto" style="max-width: 800px;">
-                            <div class="card-body text-center">
-                                <h5 class="card-title hometext1">
-                                    Create And Track Habits
-                                </h5>
-                                <p class="card-text">
-                                    Create, track, and log habits. From maintaining consistency to breaking bad habits, 
-                                    start your journey to a healthy lifestyle with us.
-                                </p>
-                                <a class="btn btn-outline-primary rounded-pill homebtn1" href="{% url 'register' %}">Get Started</a>
-                            </div>
+        </div>
+
+        <div class="highlight">
+            <div class="mt-3 mb-2 text-center">
+                <h5>Feature Highlight</h5>
+            </div>
+            <div class="container">
+                <div class="row homerow2">
+                    <div class="col-md-4 col-sm-12 featureimg" data-aos="zoom-in-right">
+                        <img src="{% static 'habit_tracker/images/Boost your immune system-bro.png' %}" alt="homepageimg1" id="hpimg2">
+                        <div class="text-center">
+                            <p>Stay on top of your habits by tracking progress, maintaining streaks, and analyzing relapses to form better routines.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 featureimg" data-aos="zoom-in">
+                        <img src="{% static 'habit_tracker/images/Mansplaining-bro.png' %}" alt="homepageimg2" id="hpimg3">
+                        <div class="text-center">
+                            <p>Connect with like-minded individuals, share your progress, and support each other in building better habits.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 featureimg" data-aos="zoom-in-left">
+                        <img src="{% static 'habit_tracker/images/Online test-bro.png' %}" alt="homepageimg3" id="hpimg4">
+                        <div class="text-center">
+                            <p>Participate in challenges, earn points, and climb the leaderboard to unlock exciting rewards and achievements.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class="row" id="navitem2">
-            <div class="d-flex justify-content-center mb-4 animate__animated animate__fadeInDown" style="margin-top: 50px;">
-                <h5>OUR SERVICES</h5>
-            </div>
-        
-            <div class="col-md-6 col-sm-12 mb-3 homesec text-center animate__animated animate__zoomInLeft">
-                <img 
-                    src="{% static 'habit_tracker/images/habit.png' %}" 
-                    alt="Track your habits" 
-                    class="img-fluid rounded">
-                <h6 class="mt-3">Track Your Habits</h6>
-                <p>Stay on top of your habits by tracking progress, maintaining streaks, and analyzing relapses to form better routines.</p>
-                <a href="{% url 'register' %}" class="btn btn-primary rounded-pill">Get Started</a>
-            </div>
-        
-            <div class="col-md-6 col-sm-12 mb-3 homesec text-center animate__animated animate__zoomInRight">
-                <img 
-                    src="{% static 'habit_tracker/images/habit (1).png' %}" 
-                    alt="Add and chat with friends" 
-                    class="img-fluid rounded">
-                <h6 class="mt-3">Add and Chat with Friends</h6>
-                <p>Connect with like-minded individuals, share your progress, and support each other in building better habits.</p>
-                <a href="{% url 'register' %}" class="btn btn-primary rounded-pill">Get Started</a>
-            </div>
-        
-            <div class="col-md-6 col-sm-12 mb-3 homesec text-center animate__animated animate__zoomInRight">
-                <img 
-                    src="{% static 'habit_tracker/images/habit (2).png' %}" 
-                    alt="Compete in quizzes and earn points" 
-                    class="img-fluid rounded">
-                <h6 class="mt-3">Compete in Quizzes and Earn Points</h6>
-                <p>Participate in challenges, earn points, and climb the leaderboard to unlock exciting rewards and achievements.</p>
-                <a href="{% url 'register' %}" class="btn btn-primary rounded-pill">Get Started</a>
-            </div>
-        
-            <div class="col-md-6 col-sm-12 mb-3 homesec text-center animate__animated animate__zoomInLeft">
-                <img 
-                    src="{% static 'habit_tracker/images/habit (3).png' %}" 
-                    alt="Join the community" 
-                    class="img-fluid rounded">
-                <h6 class="mt-3">Join the Community</h6>
-                <p>Become part of a vibrant community focused on self-improvement, sharing insights, and achieving personal growth.</p>
-                <a href="{% url 'register' %}" class="btn btn-primary rounded-pill">Get Started</a>
-            </div>
-        </div>
-        
-        <div class="row animate__animated animate__fadeInUp mt-3 d-flex justify-content-center" id="navitem3">
-            <div class="col-md-6 text-center">
+
+        <div class="our_mission">
+            <div class="mt-3 mb-3 px-3 missiontext text-center">
                 <h5>Our Mission</h5>
-                <p>
-                    Habit Tracker is designed to help individuals build positive habits, overcome addictions, 
-                    and connect with like-minded people for support and encouragement. 
-                    We believe in empowering users to achieve their personal goals, one habit at a time.
-                </p>
             </div>
-            <div class="col-md-6 text-center">
-                <h5>Connect with Us</h5>
-                <p>
-                    Follow us on <a href="https://x.com/Meculos_Hj4" target="_blank">
-                        <i class="fa-brands fa-twitter"></i> Twitter
-                    </a>.
-                    <br>Contact us: <a href="princeprosper444@gmail.com">
-                        <i class="fa-solid fa-envelope"></i> Email Us
-                    </a>.
-                </p>
+            <div class="container">
+                <div class="row homerow3">
+                    <div class="col-md-6 col-sm-12 mission" data-aos="zoom-out-left">
+                        <p class="px-3">
+                            Our mission is to empower individuals to break free from bad habits, build healthier routines, and take control of their lives. We believe that self-improvement should be accessible, supportive, and judgment-free.
+                            Through habit tracking, community support, and engaging challenges, we provide a structured yet flexible environment where users can set goals, track progress, and celebrate milestones—all while staying motivated and accountable.
+                            Whether you're overcoming an addiction, building positive habits, or simply striving for a better version of yourself, we’re here to support you every step of the way.
+                        </p>
+                    </div>
+                    <div class="col-md-6 col-sm-12 missionimg" data-aos="zoom-out-right">
+                        <img src="{% static 'habit_tracker/images/Business mission-rafiki.png' %}" alt="homepageimg4" id="hpimg5">
+                    </div>
+                </div>
             </div>
-        </div>        
+        </div>
+
+        <div class="contact_us">
+            <div class="mt-3 mb-3 contacttext text-center">
+                <h5>Contact Us</h5>
+            </div>
+            <div class="container">
+                <div class="row homerow4">
+                    <div class="col-md-6 col-sm-12 contactimg" data-aos="zoom-out-right">
+                        <img src="{% static 'habit_tracker/images/Mention-bro.png' %}" alt="homepageimg5" id="hpimg6">
+                    </div>
+                    <div class="col-md-6 col-sm-12 contact">
+                        <h5 class="contxt1">
+                            <a href="https://x.com/Meculos_Hj4" class="a1" target="_blank">
+                                <i class="fa-brands fa-twitter"></i> Twitter
+                            </a>
+                        </h5>
+                        <h5 class="contxt2">
+                            <a href="princeprosper444@gmail.com" class="a2">
+                                <i class="fa-solid fa-envelope"></i> Email Us
+                            </a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

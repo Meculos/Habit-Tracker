@@ -272,7 +272,7 @@ function submitLogHabit() {
             console.log(data.message)
             activityLogs()
         } else {
-            alert('Habit could not be logged')
+            alert('You can only log each habit once a day')
         }
     })
     .catch(error => console.log("Error logging habit: ", error))

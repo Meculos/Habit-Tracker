@@ -15,15 +15,6 @@
             <li class="nav-item">
                 <a class="nav-link" style="color: white;" href="{% url 'index' %}#navitem1">Home</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" style="color: white;" href="{% url 'index' %}#navitem2">Services</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" style="color: white;" href="{% url 'index' %}#navitem3">About Us</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" style="color: white;" href="{% url 'dashboard' %}">Dashboard</a>
-            </li>
             {% if not user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" style="color: white;" href="{% url 'login' %}">Login</a>
@@ -72,9 +63,9 @@
         </ul>   
     </div>
     <div class="row">
-        <div class="col-9 col-md-9 col-sm-12 mb-3">
-            <div class="row">
-                <div class="col-md-4 col-sm-12 mb-3 d-flex">
+        <div class="col-md-9 col-sm-12 mb-3">
+            <div class="row cardrow">
+                <div class="col-md-4 col-sm-12 mb-3 dcard d-flex">
                     <div class="card flex-grow-1 shadow-lg border-primary">
                         <div class="card-body">
                             <h5 class="card-title text-primary">
@@ -85,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-12 mb-3 d-flex">
+                <div class="col-md-4 col-sm-12 dcard mb-3 d-flex">
                     <div class="card flex-grow-1 shadow-lg border-info">
                         <div class="card-body">
                             <h5 class="card-title text-info">
@@ -96,7 +87,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-12 mb-3 d-flex">
+                <div class="col-md-4 col-sm-12 dcard mb-3 d-flex">
                     <div class="card flex-grow-1 shadow-lg border-success">
                         <div class="card-body">
                             <h5 class="card-title text-success">
@@ -158,7 +149,10 @@
             <div class="row mt-4">
                 <div class="col-12">
                     <h2 class="text-center">Mood Data</h2>
-                    <canvas id="combinedMoodChart" width="100%" height="50" 
+                    <canvas id="combinedMoodChart" class="d-none d-md-block" width="100%" height="50" 
+                        data-combined-mood-chart="{{ combined_mood_chart_data }}">
+                    </canvas>
+                    <canvas id="combinedMoodChartsm" class="d-md-none" width="100%" height="90" 
                         data-combined-mood-chart="{{ combined_mood_chart_data }}">
                     </canvas>
                 </div>

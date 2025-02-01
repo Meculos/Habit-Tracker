@@ -15,35 +15,35 @@
         <form method="post" action="{% url 'register' %}" class="mx-auto" id="registerForm" autocomplete="form">
             {% csrf_token %}
             <div class="form-group">
-                <label for="realname">Name</label>
+                <label for="realname">Name <small style="color: gray;"> Required</small></label>
                 <input class="form-control" name="realname" placeholder="eg John Doe" autofocus autocomplete="realname" id="realname" aria-describedby="realnamehelp" type="text">
                 <div id="realnamehelp" class="form-text" style="color: white";>
                     Your private info will never be shared with anyone
                 </div>
             </div>
             <div class="form-group mt-4">
-                <label for="username">Username</label>
+                <label for="username">Username <small style="color: gray;"> Required</small></label>
                 <input class="form-control" name="new-username" placeholder="Lily4846" autocomplete="new-username" id="username" aria-describedby="usernamehelp" type="text">
                 <div id="usernamehelp" class="form-text" style="color: white;">
                     Be mindful of strong language when choosing a username
                 </div>
             </div>
             <div class="form-group mt-4">
-                <label for="email">Email</label>
+                <label for="email">Email <small style="color: gray;"> Required</small></label>
                 <input class="form-control" name="email" placeholder="example@gmail.com" autocomplete="off" id="email" aria-describedby="emailhelp" type="email">
                 <div id="emailhelp" class="form-text" style="color: white;">
                     Your private info will never be shared with anyone
                 </div>
             </div>
             <div class="form-group mt-4">
-                <label for="password">Password</label>
+                <label for="password">Password <small style="color: gray;"> Required</small></label>
                 <input class="form-control" name="new-password" placeholder="password" autocomplete="off" id="password" aria-describedby="passwordhelp" type="password">
                 <div id="passwordhelp" class="form-text" style="color: white;">
                     Your password should be at least 8 characters long and must be alpha-numerical
                 </div>
             </div>
             <div class="form-group mt-4">
-                <label for="confirmation">Repeat Password</label>
+                <label for="confirmation">Repeat Password <small style="color: gray;"> Required</small></label>
                 <input class="form-control" name="new-confirmation" placeholder="repeat password" autocomplete="off" id="confirmation" aria-describedby="confirmationhelp" type="password">
                 <div id="confirmationhelp" class="form-text" style="color: white;">
                     Re-type your password

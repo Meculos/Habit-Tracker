@@ -145,6 +145,76 @@ document.addEventListener('DOMContentLoaded', () => {
         const b = Math.floor(Math.random() * 255);
         return `rgba(${r}, ${g}, ${b}, 1)`;
     }
+
+    const combinedMoodCtxsm = document.getElementById("combinedMoodChartsm");
+    const combinedMoodDatasm = JSON.parse(combinedMoodCtx.dataset.combinedMoodChart);
+    console.log('combined mood data: ', combinedMoodData)
+
+    if (!combinedMoodDatasm || combinedMoodDatasm.length === 0) {
+        console.log("No combined mood data available");
+    } else {
+        // Prepare datasets and labels
+        const datasets = [];
+        let allLabels = new Set();
+
+        combinedMoodDatasm.forEach(habit => {
+            const labels = habit.mood_data.map(entry => entry.date);
+            const data = habit.mood_data.map(entry => entry.average_mood);
+
+            // Add habit data to datasets
+            datasets.push({
+                label: habit.habit, // Habit name as the label
+                data: data,
+                borderColor: getRandomColor(),
+                fill: false,
+                tension: 0.4,
+            });
+
+            // Add all unique dates to labels
+            labels.forEach(label => allLabels.add(label));
+        });
+
+        // Sort all unique dates
+        allLabels = Array.from(allLabels).sort();
+
+        // Generate the chart
+        new Chart(combinedMoodCtxsm, {
+            type: "line",
+            data: {
+                labels: allLabels, // Unique sorted dates
+                datasets: datasets,
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true },
+                    tooltip: { enabled: true },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        suggestedMin: 1,
+                        suggestedMax: 5,
+                        ticks: {
+                            stepSize: 1,
+                            callback: function (value) {
+                                const moodLabels = ["Very Low", "Low", "Neutral", "Good", "Very Good"];
+                                return moodLabels[value - 1]; // Convert numeric mood to text
+                            },
+                        },
+                    },
+                },
+            },
+        });
+    }
+
+    // Utility function to generate random colors for each dataset
+    function getRandomColor() {
+        const r = Math.floor(Math.random() * 255);
+        const g = Math.floor(Math.random() * 255);
+        const b = Math.floor(Math.random() * 255);
+        return `rgba(${r}, ${g}, ${b}, 1)`;
+    }
 });
 
 function renderCompletionRateChart(success, setback) {

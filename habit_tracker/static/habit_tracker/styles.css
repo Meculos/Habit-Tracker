@@ -1,14 +1,13 @@
 body {
-    background: linear-gradient(to bottom, rgba(245, 245, 245, 0.8), #ffffff); /* Transparent light grey */
+    background: white
 }
 
 #homepagenav {
-    background-color: #221d23 !important;
-    color: #bec5ad !important;
+    background-color: #28a745 !important;
 }
 
 #registerForm, #editProfileForm {
-    background-color: #221d23 !important;
+    background-color: #218838 !important;
     border-radius: 10px;
     padding: 20px;
     color: white;
@@ -17,7 +16,7 @@ body {
 }
 
 #loginForm, #habitCreationForm, #habitLogForm {
-    background-color: #221d23 !important;
+    background-color: #218838 !important;
     border-radius: 10px;
     padding: 20px;
     color: white;
@@ -213,7 +212,7 @@ body {
     box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.2); /* Optional shadow for effect */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .custom-sidebar {
         position: relative; /* Reverts the sidebar's fixed positioning */
         height: auto; /* Allow it to take natural height */
@@ -581,4 +580,211 @@ canvas {
     border-color: white;
 }
 
+#hpimg1,
+#hpimg2,
+#hpimg3,
+#hpimg4,
+#hpimg5,
+#hpimg6 {
+    object-fit: contain !important;
+    height: 100%;
+    width: 100%;
+}
 
+.contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.contxt1, .contxt2 {
+    font-size: 50px;
+    font-style: italic;
+}
+.a1, .a2 {
+    color: black;
+}
+
+.text-label,
+.text-hero-bold,
+.text-hero-regular {
+    margin-top: 2px;
+}
+
+.text-label {
+    color: rgb(64, 216, 64);
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 31px;
+}
+
+.text-hero-bold {
+    color: black;
+    font-size: 75px;
+    font-weight: bold;
+}
+
+.text-hero-regular {
+    color: black;
+    font-size: 20px;
+    font-weight: 200;
+}
+
+.copy {
+    display: flex;
+    flex-direction: column;
+    padding-top: 200px;
+    justify-content: end;
+}
+
+.registerBtn {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+.registerBtn:hover {
+    background-color: green;
+    color: whitesmoke;
+    border-color: green;
+}
+.registerBtn:focus {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+.homerow3 {
+    display: flex;
+    align-items: center;
+}
+.our_mission {
+    padding-top: 100px;
+}
+
+@media (max-width: 767px) {
+    .hero {
+        margin: 2rem 0;
+        text-align: center;
+        margin-top: 0px;
+        padding-top: 0px;
+    }
+    .text-label,
+    .text-hero-bold,
+    .text-hero-regular {
+        margin-top: 0px;
+        text-align: center;
+    }
+    .registerBtn {
+        background-color: #28a745;
+        color: white;
+        border-color: #28a745;
+        display: block;
+        margin: 1rem 0;
+    }
+    .text-hero-bold {
+        color: black;
+        font-size: 60px;
+        font-weight: bold;
+    }
+    .copy {
+        padding-top: 100px;
+    }
+    #hpimg2,
+    #hpimg3,
+    #hpimg4,
+    #hpimg5,
+    #hpimg6 {
+        object-fit: contain !important;
+        height: 80%;
+        width: 80%;
+    }
+    .featureimg, .missionimg, .contactimg {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .contxt1, .contxt2 {
+        font-size: 25px;
+        font-style: italic;
+    }
+    .mission {
+        text-align: center;
+    }
+    .cardrow {
+        width: 100%;
+    }
+    .dcard {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+    .text-label {
+        color: rgb(64, 216, 64);
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 31px;
+    }
+    
+    .text-hero-bold {
+        color: black;
+        font-size: 40px;
+        font-weight: bold;
+    }
+    
+    .text-hero-regular {
+        color: black;
+        font-size: 15px;
+        font-weight: 200;
+    }
+
+    .text-label,
+    .text-hero-bold,
+    .text-hero-regular {
+        margin-left: 1rem 0;
+        margin-right: 1rem 0;
+    }
+    .copy {
+        padding-top: 80px;
+    }
+    .homerow1 {
+        padding-top: 50px;
+    }
+    #hpimg2,
+    #hpimg3,
+    #hpimg4,
+    #hpimg5,
+    #hpimg6 {
+        object-fit: contain !important;
+        height: 90%;
+        width: 90%;
+    }
+    .featureimg, .missionimg, .contactimg {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .contxt1, .contxt2 {
+        font-size: 30px;
+        font-style: italic;
+    }
+    .our_mission {
+        padding-top: 30px;
+    }
+    .custom-sidebar {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 20px;
+        height: fit-content; /* Full height */
+        position: fixed;
+        right: 5px;
+        z-index: 1030;
+        box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+    #notificationsDropdown {
+        margin-left: 140px;
+    }
+}

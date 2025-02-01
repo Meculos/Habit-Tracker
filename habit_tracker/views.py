@@ -82,7 +82,7 @@ def register(request):
         age_group = request.POST.get("age_group")
         gender = request.POST.get("gender")
 
-        if any(not field for field in [real_name, username, email, password, confirmation, age_group, gender]):
+        if any(not field for field in [real_name, username, email, password, confirmation]):
             return render(request, "habit_tracker/register.html", {
                 "message": "Required fields cannot be empty"
             })
@@ -262,7 +262,7 @@ def edit_profile(request):
         messages = []
 
         # Validation checks
-        if any(not field for field in [realname, username, email, age_group, gender, userbio]):
+        if any(not field for field in [realname, username, email]):
             messages.append("Required fields cannot be empty.")
         if CustomUser.objects.filter(username=username).exclude(id=request.user.id).exists():
             messages.append("Username already taken.")

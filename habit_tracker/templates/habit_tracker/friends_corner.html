@@ -17,7 +17,7 @@
     <div class="mb-3 d-flex justify-content-center">
         <form class="d-flex" role="search" action="{% url 'search' %}">
             <input class="form-control" type="search" placeholder="search for friends" name="search" aria-label="search" id="search">
-            <button class="btn btn-outline-primary searchbtn" type="submit">Search</button>
+            <button class="btn btn-outline searchbtn" type="submit">Search</button>
         </form>
     </div>
     <div class="row">
@@ -141,7 +141,7 @@
                             </div>
                     
                             <!-- Go to chat button -->
-                            <a href="{% if chat.sender != user %}{% url 'chat' chat.sender.id %}{% else %}{% url 'chat' chat.receiver.id %}{% endif %}" class="btn btn-outline-primary ms-auto chatbtn">
+                            <a href="{% if chat.sender != user %}{% url 'chat' chat.sender.id %}{% else %}{% url 'chat' chat.receiver.id %}{% endif %}" class="btn btn-outline ms-auto chatbtn">
                                 Chat <i class="fas fa-chevron-right"></i>
                             </a>
                         </div>
