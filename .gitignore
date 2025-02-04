@@ -1,0 +1,19 @@
+# Ignore the virtual environment folder
+.env
+
+# Ignore database files (if using SQLite locally)
+db.sqlite3
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore IDE/editor files
+.vscode/
+.idea/
+*.swp
+
+# Ignore logs and temporary files
+*.log
+*.bak
