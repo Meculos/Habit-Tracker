@@ -3,7 +3,7 @@ body {
 }
 
 #homepagenav {
-    background-color: #28a745 !important;
+    background-color: #221d23 !important;
 }
 
 #registerForm, #editProfileForm {
@@ -243,7 +243,7 @@ body {
     border-radius: 10px;
 }
 
-#commnav, #smallcommnav, #postsDiv, #friendnav, #smallfriendnav {
+#commnav, #postsDiv, #friendnav, #smallfriendnav {
     border-right: 2px solid #221d23;
     margin-top: 0;
     min-height: 100vh;
@@ -715,6 +715,58 @@ canvas {
     }
     .dcard {
         width: 100%;
+    }
+    .profileinfo {
+        display: flex;
+        flex-direction: column;
+    }
+    .profilecol {
+        padding-top: 10px;
+    }
+    .d-flex {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start; /* Keeps nav aligned at the top */
+    }
+    #smallcommnav {
+        flex: 0 0 auto; /* Prevents nav from stretching */
+        margin: 0px;
+        padding: 0px;
+    }
+    #smallposts {
+        flex: 1; /* Takes up remaining space */
+        margin: 0px;
+        padding: 0px;
+    }
+    #smallposts1 {
+        flex: 1; /* Takes up remaining space */
+        margin: 0px;
+        padding: 0px;
+    }
+    #smallpp {
+        height: 50px !important;
+        width: 50px !important;
+        margin-bottom: 80px;
+    }
+    #friendname {
+        font-size: 20px;
+    }
+    #friendpp, #searchpp {
+        height: 50px !important;
+        width: 50px !important;
+    }
+    #fldiv {
+        margin-left: 0px !important;
+    }
+    .navitems1 {
+        margin: 0px;
+        padding: 0px;
+    }
+    #smhomepagenav {
+        background-color: #221d23 !important;
+    }
+    .hddiv {
+        min-height: 100px !important;
     }
 }
 

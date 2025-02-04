@@ -225,7 +225,12 @@ function submitHabitCreate(event) {
                 createHabit.classList.remove('animate__animated', 'animate__fadeOut')
             }, 1000)
         } else {
-            alert('Error: Habit could not be created')
+            Swal.fire({
+                title: "Alert!",
+                text: "Habit could not be created. Please try again later.",
+                icon: "info",
+                confirmButtonText: "OK"
+            });
         }
     })
     .catch(error => console.log("Error creating habit:", error))
@@ -272,7 +277,12 @@ function submitLogHabit() {
             console.log(data.message)
             activityLogs()
         } else {
-            alert('You can only log each habit once a day')
+            Swal.fire({
+                title: "Alert!",
+                text: "You can only log each habit once a day.",
+                icon: "info",
+                confirmButtonText: "OK"
+            });
         }
     })
     .catch(error => console.log("Error logging habit: ", error))

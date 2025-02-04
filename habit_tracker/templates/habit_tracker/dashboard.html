@@ -12,18 +12,29 @@
         </button>                  
         <a class="navbar-brand" style="color: white;" href="#">Habit Tracker</a>
         <ul class="nav nav-pills">
-            <li class="nav-item">
+            <li class="nav-item d-none d-md-block">
                 <a class="nav-link" style="color: white;" href="{% url 'index' %}#navitem1">Home</a>
             </li>
             {% if not user.is_authenticated %}
-                <li class="nav-item">
+                <li class="nav-item d-none d-md-block">
                     <a class="nav-link" style="color: white;" href="{% url 'login' %}">Login</a>
                 </li>
             {% else %}
-                <li class="nav-item">
+                <li class="nav-item d-none d-md-block">
                     <a class="nav-link" style="color: white;" href="{% url 'logout' %}">Logout</a>
                 </li>
             {% endif %}
+            <li class="nav-item dropdown d-md-none">
+                <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Menu</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'index' %}#navitem1">Home</a></li>
+                    {% if not user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                    {% else %}
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                    {% endif %}
+                </ul>
+            </li>
         </ul>
     </nav>
 {% endblock %}

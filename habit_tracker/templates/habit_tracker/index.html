@@ -6,6 +6,10 @@
 {% endblock %}
 
 {% block main %}
+    <div id="mobile-warning" class="alert alert-warning text-center" style="position: fixed; top: 0; width: 100%; z-index: 1000;">
+        This site is best experienced on a PC or tablet. Mobile support is in progress. Thank you for your patience.
+        <button type="button" class="btn-close" onclick="document.getElementById('mobile-warning').style.display='none'"></button>
+    </div>
     <div data-bs-spy="scroll" style="background-color: white !important;" data-bs-target="homepagenav" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2 mt-4" tabindex="0">
         <div class="hero">
            <div class="container">

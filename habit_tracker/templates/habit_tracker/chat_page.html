@@ -6,15 +6,38 @@
 {% endblock %}
 
 {% block nav %}
-    <div style="background-color: #221d23;">
+    <div style="background-color: #221d23;" class="d-none d-md-block">
         <header class="d-flex justify-content-center align-items-center" style="height: 50px;">
             <h5 style="color: white;">{{ friend.username }}</h5>
         </header>
     </div>
+    <nav id="smhomepagenav" class="navbar bg-body-tertiary px-3 mt-4 d-md-none">               
+        <a class="navbar-brand" style="color: white;" href="#">Habit Tracker</a>
+        <ul class="nav nav-pills">
+            <li class="nav-item dropdown d-md-none">
+                <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Menu</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'index' %}#navitem1">Home</a></li>
+                    <li><a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li><a class="dropdown-item" href="{% url 'profile' user.id %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'friends_list' %}">Friends List</a></li>
+                    <li><a class="dropdown-item" href="{% url 'friends_posts' %}">Friends Posts</a></li>
+                    <li><a class="dropdown-item" href="{% url 'community' %}">Community</a></li>
+                    <li><a class="dropdown-item" href="{% url 'friends_corner' %}">Social Corner</a></li>
+                    <li><a class="dropdown-item" href="{% url 'make_post' %}">Create Post</a></li>
+                    {% if not user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                    {% else %}
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                    {% endif %}
+                </ul>
+            </li>
+        </ul>
+    </nav>
 {% endblock %}
 
 {% block main %}
-    <div class="row">
+    <div class="d-flex">
         <nav class="col-md-3 col-lg-2 d-none d-md-block sidebar" id="friendnav">
             <div class="position-sticky d-flex justify-content-center">
                 <ul class="nav flex-column mt-4">
@@ -72,7 +95,7 @@
                 </ul>
             </div>
         </nav>
-        <nav class="col-sm-2 d-md-none sidebar" id="smallfriendnav">
+        <!-- <nav class="col-sm-1 d-md-none sidebar" id="smallfriendnav">
             <div class="position-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
@@ -128,8 +151,8 @@
                     </li>
                 </ul>
             </div>
-        </nav>
-        <div id="chat-container" class="col-lg-8 col-md-6 col-sm-10" style="background-color: rgb(231, 224, 224);">
+        </nav> -->
+        <div id="chat-container" class="col-lg-8 col-md-6 col-sm-12" style="background-color: rgb(231, 224, 224);">
             <div id="chat-messages" style="max-height: 70vh; overflow-y: auto; padding: 10px; background-color: #bec5ad;">
                 {% for message in messages %}
                     {% if message.message_class == "incoming" %}
