@@ -30,7 +30,9 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ "localhost", "127.0.0.1", "habit-log.up.railway.app" ]
+
+CSRF_TRUSTED_ORIGINS = [ "https://habit-log.up.railway.app" ]
 
 
 # Application definition
