@@ -150,10 +150,10 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Local Redis instance, DB 0
+CELERY_BROKER_URL = 'redis://default:oijokpfnfmvwxbepSUSnSUtVLRDMpAdw@ballast.proxy.rlwy.net:42508'
 CELERY_ACCEPT_CONTENT = ['json']  # Use JSON to serialize data
 CELERY_TASK_SERIALIZER = 'json'  # Specify how Celery tasks are serialized
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://default:oijokpfnfmvwxbepSUSnSUtVLRDMpAdw@ballast.proxy.rlwy.net:42508'
 CELERY_TIMEZONE = 'UTC'
 
 # Channels settings
