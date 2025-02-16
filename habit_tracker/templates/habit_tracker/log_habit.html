@@ -6,11 +6,11 @@
 {% endblock %}
 
 {% block main %}
-    <div class="btn-group d-flex mx-auto" role="group" id="navButtons">
-        <button class="btn btn-outline-primary divBtn" type="button" id="habitsButton">All Habits</button>
-        <button class="btn btn-outline-primary divBtn" type="button" id="createHabitButton">Create Habit</button>
-        <button class="btn btn-outline-primary divBtn" type="button" id="activityButton">Activity</button>
-        <button class="btn btn-outline-primary" type="button" id="archive">Inactive Habits</button>
+    <div class="row row-cols-2 row-cols-md-4 g-2 justify-content-center" id="navButtons">
+        <div class="col"><button class="btn btn-outline-primary w-100 divBtn" type="button" id="habitsButton">All Habits</button></div>
+        <div class="col"><button class="btn btn-outline-primary w-100 divBtn" type="button" id="createHabitButton">Create Habit</button></div>
+        <div class="col"><button class="btn btn-outline-primary w-100 divBtn" type="button" id="activityButton">Activity</button></div>
+        <div class="col"><button class="btn btn-outline-primary w-100" type="button" id="archive">Inactive Habits</button></div>
     </div>
     <template id="showHabitsTemplate">
         <div class="card habit-card mt-4" id="allHabitsDiv">

@@ -7,7 +7,7 @@ body {
 }
 
 #registerForm, #editProfileForm {
-    background-color: #218838 !important;
+    background-color: #221d23 !important;
     border-radius: 10px;
     padding: 20px;
     color: white;
@@ -16,7 +16,7 @@ body {
 }
 
 #loginForm, #habitCreationForm, #habitLogForm {
-    background-color: #218838 !important;
+    background-color: #221d23 !important;
     border-radius: 10px;
     padding: 20px;
     color: white;
